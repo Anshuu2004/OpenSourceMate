@@ -139,6 +139,7 @@ cd OpenSourceMate
 ```bash
 cd frontend
 npm install
+cp .env.example .env.local   # Configure API URL (default: http://localhost:8000)
 npm run dev
 ```
 
@@ -174,6 +175,12 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
+Configure environment variables:
+
+```bash
+cp .env.example .env   # Add GitHub token, AI API key if needed
+```
+
 Install dependencies:
 
 ```bash
@@ -190,13 +197,36 @@ Then start the backend using the project's configured Django development entry p
 
 If a feature requires external services or API credentials, configure them through environment variables rather than committing secrets to the repository.
 
-Example:
+Each package includes a `.env.example` file with all supported variables. Copy the example file and fill in your values:
+
+### Frontend (`frontend/.env.local`)
+
+```bash
+cp frontend/.env.example frontend/.env.local
+```
 
 ```env
-# Example only — use the variables required by the current backend configuration.
-GITHUB_TOKEN=
-GOOGLE_API_KEY=
-OPENAI_API_KEY=
+# Backend API URL (required for API calls)
+NEXT_PUBLIC_API_URL=http://localhost:8000
+```
+
+### Backend (`backend/.env`)
+
+```bash
+cp backend/.env.example backend/.env
+```
+
+```env
+# GitHub API Token (optional, for higher rate limits)
+# GITHUB_TOKEN=
+
+# AI Configuration (optional, for AI-powered issue analysis)
+# AI_API_KEY=
+# AI_MODEL=gpt-4o-mini
+
+# Server Configuration
+# HOST=0.0.0.0
+# PORT=8000
 ```
 
 **Never commit API keys, passwords, tokens, or other secrets to Git.**

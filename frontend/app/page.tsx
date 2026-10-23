@@ -26,7 +26,7 @@ type SkillsData = {
 };
 
 export default function Home() {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
