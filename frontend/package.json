@@ -12,6 +12,8 @@
     "lint": "eslint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "codegen:types": "node scripts/generate-types.mjs",
+    "codegen:check": "node scripts/generate-types.mjs --check",
     "test": "jest",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
