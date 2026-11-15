@@ -10,6 +10,7 @@ from app.api.routes.ai import router as ai_router
 from app.api.routes.github import router as github_router
 from app.api.routes.issues import router as issues_router
 from app.api.routes.matching import router as matching_router
+from app.api.routes.friendliness import router as friendliness_router
 from app.config import get_settings
 from app.exceptions import APIException
 from app.schemas.openapi_serializers import (
@@ -374,6 +375,7 @@ app.include_router(github_router, prefix="/api/v1", include_in_schema=True)
 app.include_router(issues_router, prefix="/api/v1", include_in_schema=True)
 app.include_router(ai_router, prefix="/api/v1", include_in_schema=True)
 app.include_router(matching_router, prefix="/api/v1", include_in_schema=True)
+app.include_router(friendliness_router, prefix="/api/v1", include_in_schema=True)
 
 # Legacy /api/ Routers (Backward Compatibility)
 app.include_router(github_router, prefix="/api", include_in_schema=False)
