@@ -1,2 +1,2 @@
-# Optional: semantic issue matching (set OSM_USE_EMBEDDINGS=true to use it)
-sentence-transformers>=6.2.0,<7
+# Optional machine learning dependencies delegating to modular ml requirements
+-r requirements/ml.txt
