@@ -7,6 +7,7 @@ All notable changes to OpenSourceMate are recorded here. The format follows
 
 ### Added
 
+- Data: a hand-labelled dataset of 72 GitHub issues for difficulty estimation in `data/issue-difficulty-labels.csv`, with labelling guidelines and a validation script (#258).
 - Testing: shared sanitized GitHub API response fixtures under `fixtures/` (users, repositories, languages, events, pagination, and edge cases) integrated across backend pytest tests and frontend mocks/tests (#232).
 - Documentation: architecture guide, deployment guide, roadmap, label guide, first contribution guide,
   `.env.example` files and a polished README.
@@ -20,6 +21,8 @@ All notable changes to OpenSourceMate are recorded here. The format follows
 - Tooling: ESLint, Prettier and pre-commit hooks, root development scripts, a welcome workflow for
   first-time contributors, a mock API (MSW) for the frontend, and a frontend test for the analyze flow.
 - Tooling: a Security workflow (npm audit, pip-audit, Bandit and CodeQL) on pull requests and weekly, with a triage guide in `docs/security-scanning.md` (#198).
+- Tooling: a post-deployment smoke test workflow that checks the backend health endpoint and a profile and skill analysis, configured through repository variables (#199).
+- Backend: rule-based extraction of the skills an issue needs from its title, body and labels, driven by a keyword and alias dictionary in `app/data/issue_skill_keywords.json`, with hand-labelled `required_skills` in the evaluation set and a precision/recall script (#271).
 
 ### Changed
 

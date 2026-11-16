@@ -59,3 +59,40 @@ class RateLimitExceededError(APIException):
             message=message,
             details={"reset_at": reset_at} if reset_at else None,
         )
+
+
+class OrganizationAccountError(APIException):
+    """Raised when the username belongs to an organization rather than a personal user account."""
+
+    def __init__(self, username: str) -> None:
+        super().__init__(
+            status_code=422,
+            code="ORGANIZATION_ACCOUNT",
+            message=f"'{username}' is an organization account. Please enter a personal developer username.",
+            details={"username": username, "account_type": "Organization"},
+        )
+
+
+class SuspendedAccountError(APIException):
+    """Raised when the account is suspended or blocked by GitHub."""
+
+    def __init__(self, username: str) -> None:
+        super().__init__(
+            status_code=403,
+            code="ACCOUNT_SUSPENDED",
+            message=f"The account '{username}' has been suspended or unavailable on GitHub.",
+            details={"username": username},
+        )
+
+
+class RenamedAccountError(APIException):
+    """Raised when the user account has been renamed on GitHub (moved via 301/302 redirect)."""
+
+    def __init__(self, old_username: str, new_username: str) -> None:
+        super().__init__(
+            status_code=301,
+            code="ACCOUNT_RENAMED",
+            message=f"User '{old_username}' has been renamed to '{new_username}'. Please use '{new_username}'.",
+            details={"old_username": old_username, "new_username": new_username},
+        )
+

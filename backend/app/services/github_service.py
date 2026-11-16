@@ -239,9 +239,31 @@ async def get_github_user(username: str, refresh: bool = False):
     if response.status_code == 404:
         return None
 
+    if response.status_code in (301, 302, 307, 308):
+        new_url = response.headers.get("Location", "")
+        new_username = new_url.rstrip("/").split("/")[-1] if new_url else ""
+        from app.exceptions import RenamedAccountError
+        raise RenamedAccountError(old_username=username, new_username=new_username or "unknown")
+
     response.raise_for_status()
 
     user = response.json()
+
+    # Check for organization account (Issue #261)
+    if user.get("type") == "Organization":
+        from app.exceptions import OrganizationAccountError
+        raise OrganizationAccountError(username=user.get("login", username))
+
+    # Check for suspended account status
+    if user.get("suspended_at") is not None or user.get("user_view_type") == "suspended":
+        from app.exceptions import SuspendedAccountError
+        raise SuspendedAccountError(username=user.get("login", username))
+
+    # Detect redirect/rename if login casing or handle completely changed
+    if user.get("login") and user.get("login").lower() != username.lower():
+        from app.exceptions import RenamedAccountError
+        raise RenamedAccountError(old_username=username, new_username=user.get("login"))
+
     cache.set(key, user, get_settings().github_cache_ttl)
 
     return user
