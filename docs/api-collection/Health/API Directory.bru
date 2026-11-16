@@ -1,0 +1,17 @@
+meta {
+  name: API Directory
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/v1
+  body: none
+  auth: none
+}
+
+tests {
+  test("returns 200", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+}

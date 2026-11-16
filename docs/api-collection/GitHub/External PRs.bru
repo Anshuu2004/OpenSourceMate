@@ -1,0 +1,22 @@
+meta {
+  name: External PRs
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/api/v1/github/users/{{username}}/external-prs?limit=3&refresh=false
+  body: none
+  auth: none
+}
+
+params:query {
+  limit: 3
+  refresh: false
+}
+
+tests {
+  test("returns 200", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+}

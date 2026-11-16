@@ -1,0 +1,21 @@
+meta {
+  name: Recommended Issues
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/v1/matching/users/{{username}}/issues?exclude_stale=true
+  body: none
+  auth: none
+}
+
+params:query {
+  exclude_stale: true
+}
+
+tests {
+  test("returns 200", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+}

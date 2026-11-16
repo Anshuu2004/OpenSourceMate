@@ -1,0 +1,21 @@
+meta {
+  name: User Repositories
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/v1/github/users/{{username}}/repositories?refresh=false
+  body: none
+  auth: none
+}
+
+params:query {
+  refresh: false
+}
+
+tests {
+  test("returns 200", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+}
