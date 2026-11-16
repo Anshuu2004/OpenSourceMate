@@ -294,6 +294,8 @@ http://localhost:8000
 
 Interactive OpenAPI documentation (Swagger UI) is accessible at `http://localhost:8000/docs`.
 
+For curl, Python and JavaScript examples of every endpoint, plus a Bruno request collection, see [API Usage Examples](docs/api-usage-examples.md).
+
 ### Run the backend tests
 
 The tests mock the GitHub API, so no network or token is needed.

@@ -1,0 +1,17 @@
+meta {
+  name: Health Diagnostics
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/v1/health/diagnostics
+  body: none
+  auth: none
+}
+
+tests {
+  test("returns 200", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+}

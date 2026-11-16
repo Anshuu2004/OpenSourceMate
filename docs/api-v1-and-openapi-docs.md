@@ -21,6 +21,8 @@ All primary API operations are hosted under the `/api/v1/` prefix:
 ### Backward Compatibility
 Legacy endpoints under `/api/` continue to function without disruption, ensuring existing integrations and client requests remain backward-compatible.
 
+Request examples in curl, Python and JavaScript, with sample responses and a Bruno collection, are in [API Usage Examples](api-usage-examples.md).
+
 ## Interactive Documentation
 
 OpenSourceMate ships with built-in interactive OpenAPI 3.0+ documentation:
