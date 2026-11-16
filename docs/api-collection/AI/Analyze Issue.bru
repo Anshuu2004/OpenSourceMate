@@ -1,0 +1,40 @@
+meta {
+  name: Analyze Issue
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/api/v1/ai/analyze-issue
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "issue": {
+      "title": "Add type hints to utils module",
+      "body": "The utils module lacks type hints. Add them and run mypy.",
+      "labels": [
+        "good first issue",
+        "python"
+      ],
+      "repository": "example/repo",
+      "language": "Python"
+    },
+    "user_skills": [
+      "Python",
+      "FastAPI"
+    ]
+  }
+}
+
+tests {
+  test("returns 200", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+}
