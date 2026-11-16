@@ -10,6 +10,7 @@ from app.api.routes.ai import router as ai_router
 from app.api.routes.github import router as github_router
 from app.api.routes.issues import router as issues_router
 from app.api.routes.matching import router as matching_router
+from app.api.routes.friendliness import router as friendliness_router
 from app.config import get_settings
 from app.exceptions import APIException
 from app.schemas.openapi_serializers import (
@@ -38,6 +39,7 @@ async def lifespan(app: FastAPI):
 
 from app.middleware.logging import StructuredLoggingMiddleware
 from app.middleware.rate_limit import IPRateLimitMiddleware
+from app.middleware.security_headers import SecurityHeadersMiddleware
 from app.utils.logging import setup_structured_logging
 
 settings = get_settings()
@@ -113,6 +115,10 @@ app.add_middleware(
     allow_methods=settings.cors_allow_methods,
     allow_headers=settings.cors_allow_headers,
 )
+
+# Added last so it is the outermost middleware and also covers 429 and CORS responses
+if settings.security_headers_enabled:
+    app.add_middleware(SecurityHeadersMiddleware, settings=settings)
 
 
 def format_error_content(
@@ -369,6 +375,7 @@ app.include_router(github_router, prefix="/api/v1", include_in_schema=True)
 app.include_router(issues_router, prefix="/api/v1", include_in_schema=True)
 app.include_router(ai_router, prefix="/api/v1", include_in_schema=True)
 app.include_router(matching_router, prefix="/api/v1", include_in_schema=True)
+app.include_router(friendliness_router, prefix="/api/v1", include_in_schema=True)
 
 # Legacy /api/ Routers (Backward Compatibility)
 app.include_router(github_router, prefix="/api", include_in_schema=False)

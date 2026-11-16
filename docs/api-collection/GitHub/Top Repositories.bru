@@ -1,0 +1,22 @@
+meta {
+  name: Top Repositories
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/v1/github/users/{{username}}/top-repositories?exclude_forks=true&refresh=false
+  body: none
+  auth: none
+}
+
+params:query {
+  exclude_forks: true
+  refresh: false
+}
+
+tests {
+  test("returns 200", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+}

@@ -1,0 +1,19 @@
+{
+  "login": "octo-org",
+  "id": 99999901,
+  "type": "Organization",
+  "name": "Octocat Foundation",
+  "company": null,
+  "blog": "https://opensource.org",
+  "location": "Global",
+  "email": null,
+  "bio": "Official Open Source Organization",
+  "public_repos": 42,
+  "public_gists": 0,
+  "followers": 1500,
+  "following": 0,
+  "created_at": "2020-01-01T00:00:00Z",
+  "updated_at": "2026-01-01T00:00:00Z",
+  "avatar_url": "https://avatars.githubusercontent.com/u/99999901?v=4",
+  "html_url": "https://github.com/octo-org"
+}
