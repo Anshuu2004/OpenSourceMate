@@ -17,6 +17,7 @@ Thank you for your interest in contributing to **OpenSourceMate**! OpenSourceMat
 - [Running Tests & Coverage](#running-tests--coverage)
 - [Development Workflow](#development-workflow)
   - [Claiming an Issue](#claiming-an-issue)
+  - [Issue Assignment & Inactivity Policy](#issue-assignment--inactivity-policy)
   - [Proposing Larger Changes (RFC Process)](#proposing-larger-changes-rfc-process)
   - [Branch Naming Conventions](#branch-naming-conventions)
   - [Commit Message Guidelines](#commit-message-guidelines)
@@ -267,6 +268,15 @@ We welcome first-time contributors and experienced developers alike.
 5. Once confirmed, create a feature branch from the latest main and reference the issue in your pull request.
 
 If you can no longer work on a claimed issue, let the maintainers know so someone else can take it.
+
+#### Issue Assignment & Inactivity Policy
+
+To keep contribution opportunities accessible to everyone and prevent issues from being blocked indefinitely, we operate an automated inactivity policy:
+
+- **5-Day Friendly Nudge**: If an assigned issue has no linked draft/open PR or discussion activity for **5 days**, an automated friendly reminder will be posted to check in on your progress.
+- **7-Day Automatic Unassignment**: If there continues to be no update after **7 days** (or 2 days after the nudge), the issue will be automatically unassigned so other contributors can pick it up.
+- **Requesting More Time (`on-hold`)**: If you need more time due to exams, travel, waiting on dependencies, or complex research, comment on the issue and request the `on-hold` label. Issues labeled `on-hold` or `blocked` are strictly exempt from automated unassignment.
+- **How to Get Reassigned**: If you were unassigned but now have time to resume work, simply comment on the issue asking to be reassigned! If the issue is still open and unassigned, maintainers will gladly assign it back to you.
 
 ---
 

@@ -87,7 +87,9 @@ flowchart TD
 OpenSourceMate/
 ├── .github/                       # GitHub actions workflows, issue and PR templates
 │   ├── ISSUE_TEMPLATE/            # Templates for bug reports, feature requests, and RFC proposals (#295)
-│   ├── workflows/ci.yml           # Automated CI running tests with coverage thresholds and reporting (#269)
+│   ├── workflows/                 # CI, inactive assignees manager (#265), and contributor workflows
+│   │   ├── ci.yml                 # Automated CI running tests with coverage thresholds and reporting (#269)
+│   │   └── inactive-assignees.yml # Scheduled workflow to nudge (5d) and unassign (7d) inactive assignees (#265)
 │   └── PULL_REQUEST_TEMPLATE.md   # Standard pull request description guidelines
 │
 ├── backend/                       # FastAPI backend microservice

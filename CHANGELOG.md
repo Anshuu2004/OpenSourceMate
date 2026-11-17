@@ -7,6 +7,7 @@ All notable changes to OpenSourceMate are recorded here. The format follows
 
 ### Added
 
+- Automation & Workflow: scheduled workflow in `.github/workflows/inactive-assignees.yml` and `.github/scripts/check-inactive-assignees.js` that kindly nudges assignees inactive for 5 days and unassigns after 7 days, with `on-hold` exemption policy documented in `CONTRIBUTING.md` and `docs/LABELS.md` (#265).
 - CI & Testing: automated test coverage reporting with pytest-cov (80% threshold) and Jest (50% threshold), PR step summary reports, coverage badges in `README.md` and `README.hi.md`, and local coverage scripts (#269).
 - Documentation: faithful Hindi translation of the project documentation in `README.hi.md`, language switcher headers across `README.md` and `README.hi.md`, and synchronization guidelines in `CONTRIBUTING.md` (#294).
 - Tooling & Documentation: RFC / change proposal template in `.github/ISSUE_TEMPLATE/proposal.yml` and RFC review process in `CONTRIBUTING.md` and `docs/proposals.md` for proposing larger changes (#295).

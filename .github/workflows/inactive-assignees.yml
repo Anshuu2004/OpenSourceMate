@@ -1,0 +1,49 @@
+name: Manage Inactive Assignees
+
+on:
+  schedule:
+    # Run once daily at 00:00 UTC
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Run in dry-run mode (log actions without modifying issues)"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  issues: write
+  pull-requests: read
+  contents: read
+
+concurrency:
+  group: inactive-assignees
+  cancel-in-progress: false
+
+jobs:
+  manage-inactive:
+    name: Nudge and Unassign Inactive Assignees
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Run inactive assignees check
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { checkInactiveAssignees } = require('./.github/scripts/check-inactive-assignees.js');
+            const dryRun = context.payload.inputs ? context.payload.inputs.dry_run === true || context.payload.inputs.dry_run === 'true' : false;
+            await checkInactiveAssignees({
+              github,
+              context,
+              dryRun
+            });
