@@ -10,6 +10,7 @@ Thank you for your interest in contributing to **OpenSourceMate**! OpenSourceMat
 - [Prerequisites](#prerequisites)
 - [Project Architecture](#project-architecture)
 - [Getting Started & Local Setup](#getting-started--local-setup)
+  - [Cloud Setup (GitHub Codespaces)](#cloud-setup-github-codespaces)
   - [1. Fork and Clone](#1-fork-and-clone)
   - [2. Backend Setup (FastAPI)](#2-backend-setup-fastapi)
   - [3. Frontend Setup (Next.js)](#3-frontend-setup-nextjs)
@@ -85,6 +86,19 @@ OpenSourceMate/
 ---
 
 ## Getting Started & Local Setup
+
+### Cloud Setup (GitHub Codespaces)
+
+Prefer not to set up Python and Node.js locally? You can start contributing immediately in your browser or VS Code using GitHub Codespaces:
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Muskankr/OpenSourceMate)
+
+- Dependencies and environment files are installed automatically on creation.
+- Ports `3000` (frontend) and `8000` (backend) are pre-configured and forwarded automatically.
+- Start the frontend: `make dev-frontend` (or `cd frontend && npm run dev`)
+- Start the backend: `make dev-backend` (or `cd backend && uvicorn app.main:app --reload --port 8000`)
+
+---
 
 ### 1. Fork and Clone
 

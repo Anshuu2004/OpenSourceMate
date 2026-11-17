@@ -3,6 +3,7 @@
 [English](README.md) | **हिन्दी**
 
 [![CI](https://github.com/Muskankr/OpenSourceMate/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Muskankr/OpenSourceMate/actions/workflows/ci.yml)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Muskankr/OpenSourceMate)
 [![Coverage](https://img.shields.io/badge/Coverage-85%25-brightgreen.svg)](#बैकएंड-टेस्ट-चलाएं-run-the-backend-tests)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/Muskankr/OpenSourceMate?style=flat&logo=github)](https://github.com/Muskankr/OpenSourceMate/stargazers)
@@ -31,6 +32,7 @@ OpenSourceMate एक AI-संचालित ओपन-सोर्स यो�
 - [🏗️ प्रोजेक्ट संरचना (Project Structure)](#%EF%B8%8F-प्रोजेक्ट-संरचना-project-structure)
 - [🛠️ टेक स्टैक (Tech Stack)](#%EF%B8%8F-टेक-स्टैक-tech-stack)
 - [🚀 शुरुआत कैसे करें (Getting Started)](#-शुरुआत-कैसे-करें-getting-started)
+  - [GitHub Codespaces में विकास करें (Develop in GitHub Codespaces)](#github-codespaces-में-विकास-करें-develop-in-github-codespaces)
   - [आवश्यक शर्तें (Prerequisites)](#आवश्यक-शर्तें-prerequisites)
   - [1. रिपॉजिटरी को क्लोन करें (Clone the repository)](#1-रिपॉजिटरी-को-क्लोन-करें-clone-the-repository)
   - [2. फ्रंटएंड चलाएं (Run the frontend)](#2-फ्रंटएंड-चलाएं-run-the-frontend)
@@ -186,6 +188,21 @@ OpenSourceMate/
 ---
 
 ## 🚀 शुरुआत कैसे करें (Getting Started)
+
+### GitHub Codespaces में विकास करें (Develop in GitHub Codespaces)
+
+आप बिना किसी स्थानीय सेटअप के सीधे अपने ब्राउज़र या VS Code में GitHub Codespaces का उपयोग करके OpenSourceMate विकसित कर सकते हैं:
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Muskankr/OpenSourceMate)
+
+1. ऊपर दिए गए **Open in GitHub Codespaces** बैज पर क्लिक करें (या GitHub पर **Code > Codespaces > Create codespace on main** चुनें)।
+2. देवकंटेनर (devcontainer) स्वचालित रूप से Python 3.12, Node.js 22, सभी बैकएंड और फ्रंटएंड निर्भरताएँ इंस्टॉल करता है, और डिफ़ॉल्ट एनवायरनमेंट फाइलें सेट करता है।
+3. Codespace प्रारंभ होने के बाद, एकीकृत टर्मिनल में दोनों एप्लिकेशन चलाएं:
+   - **फ्रंटएंड**: `make dev-frontend` (पोर्ट `3000` पर पूर्वावलोकन में स्वचालित रूप से खुलता है)
+   - **बैकएंड**: `make dev-backend` (पोर्ट `8000` पर FastAPI सर्वर)
+   - **टेस्ट चलाएं**: `make test` (या `make test-backend` / `make test-frontend`)
+
+---
 
 ### आवश्यक शर्तें (Prerequisites)
 

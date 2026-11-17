@@ -85,6 +85,9 @@ flowchart TD
 
 ```text
 OpenSourceMate/
+├── .devcontainer/                 # GitHub Codespaces container definition and setup script (#264)
+│   ├── devcontainer.json          # Node 22, Python 3.12, extensions, and forwarded ports
+│   └── post-create.sh             # Automated dependency installation and environment setup
 ├── .github/                       # GitHub actions workflows, issue and PR templates
 │   ├── ISSUE_TEMPLATE/            # Templates for bug reports, feature requests, and RFC proposals (#295)
 │   ├── workflows/                 # CI, inactive assignees manager (#265), and contributor workflows
