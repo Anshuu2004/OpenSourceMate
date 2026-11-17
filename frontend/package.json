@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-  "node": ">=22 <23"
-},
+    "node": ">=22 <23"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -15,6 +15,7 @@
     "codegen:types": "node scripts/generate-types.mjs",
     "codegen:check": "node scripts/generate-types.mjs --check",
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "mock-server": "node scripts/mock-server.mjs"

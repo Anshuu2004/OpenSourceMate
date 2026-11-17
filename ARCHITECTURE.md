@@ -85,9 +85,14 @@ flowchart TD
 
 ```text
 OpenSourceMate/
+├── .devcontainer/                 # GitHub Codespaces container definition and setup script (#264)
+│   ├── devcontainer.json          # Node 22, Python 3.12, extensions, and forwarded ports
+│   └── post-create.sh             # Automated dependency installation and environment setup
 ├── .github/                       # GitHub actions workflows, issue and PR templates
-│   ├── ISSUE_TEMPLATE/            # Templates for bug reports and feature requests
-│   ├── workflows/ci.yml           # Automated CI running backend tests and frontend linter/build
+│   ├── ISSUE_TEMPLATE/            # Templates for bug reports, feature requests, and RFC proposals (#295)
+│   ├── workflows/                 # CI, inactive assignees manager (#265), and contributor workflows
+│   │   ├── ci.yml                 # Automated CI running tests with coverage thresholds and reporting (#269)
+│   │   └── inactive-assignees.yml # Scheduled workflow to nudge (5d) and unassign (7d) inactive assignees (#265)
 │   └── PULL_REQUEST_TEMPLATE.md   # Standard pull request description guidelines
 │
 ├── backend/                       # FastAPI backend microservice
@@ -154,8 +159,12 @@ OpenSourceMate/
 │
 ├── docs/                          # Architectural specs, audits, and contributor guides
 ├── CONTRIBUTING.md                # Contributor setup, PR process, and code standards
+├── GOVERNANCE.md                  # Project governance, roles, decisions, and progression (#296)
 ├── LICENSE                        # MIT License
-└── README.md                      # Project documentation and quick start guide
+├── README.md                      # Project documentation and quick start guide
+├── README.hi.md                   # Hindi translation of project documentation (#294)
+├── SECURITY.md                    # Vulnerability reporting policy and security disclosures
+└── SUPPORT.md                     # Support channels, discussions, bug reporting, and secrets guide (#296)
 ```
 
 ---

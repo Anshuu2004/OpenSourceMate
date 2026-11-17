@@ -1,0 +1,72 @@
+name: RFC / Proposal
+description: Propose a large feature, architectural change, or breaking API/UI change.
+title: "[RFC]: "
+labels:
+  - enhancement
+  - proposal
+  - needs-triage
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Request for Comments (RFC) & Proposal
+        Thank you for proposing a change to **OpenSourceMate**! Please use this template for larger changes, architectural shifts, new external dependencies, or breaking API/UI updates.
+
+        Before submitting, please read our [Proposal Process in CONTRIBUTING.md](../blob/main/CONTRIBUTING.md#proposing-larger-changes-rfc-process).
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement & Motivation
+      description: What specific problem or limitation does this proposal solve? Why is this change necessary?
+      placeholder: Describe the current limitation, user pain point, or technical bottleneck...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution & Technical Approach
+      description: Describe your proposed technical design, architecture, components affected, and workflow.
+      placeholder: Outline your proposed implementation, algorithms, libraries, or architecture...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: What alternative solutions or approaches were considered, and why were they rejected?
+      placeholder: We considered approach X, but chose Y because...
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact on API, Schema, and UI/UX
+      description: Does this proposal introduce breaking changes, new database tables/schemas, modified API endpoints, or user interface modifications?
+      placeholder: Detail any additions or breaking changes to REST endpoints, schemas, frontend components, or dependencies...
+    validations:
+      required: true
+
+  - type: textarea
+    id: implementer
+    attributes:
+      label: Who Will Implement This?
+      description: Will you implement this change yourself once approved, or are you looking for co-maintainers / contributors to collaborate?
+      placeholder: E.g., "I will implement this feature myself once approved" or "Seeking help from frontend contributors"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: acknowledgements
+    attributes:
+      label: Proposal Checklist
+      options:
+        - label: I searched existing issues, discussions, and open RFCs to avoid duplicate proposals.
+          required: true
+        - label: I understand that larger changes require maintainer review and consensus before code implementation begins.
+          required: true
+        - label: I will not begin writing code or open a PR until this proposal is approved and assigned.
+          required: true
