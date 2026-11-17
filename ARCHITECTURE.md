@@ -154,6 +154,7 @@ OpenSourceMate/
 │
 ├── docs/                          # Architectural specs, audits, and contributor guides
 ├── CONTRIBUTING.md                # Contributor setup, PR process, and code standards
+├── PROGRAM_GUIDE.md               # NWOC'26 participant guide (levels, scoring, FAQs) (#297)
 ├── LICENSE                        # MIT License
 └── README.md                      # Project documentation and quick start guide
 ```

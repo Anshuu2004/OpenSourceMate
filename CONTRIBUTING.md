@@ -29,7 +29,8 @@ Thank you for your interest in contributing to **OpenSourceMate**! OpenSourceMat
 ## Not sure where to start? Read the [Label Guide](docs/LABELS.md) and check our [Roadmap](ROADMAP.md).
 
 > 🐣 **First time contributing to open source or Git?** Check out our step-by-step [First Contribution Guide](FIRST_CONTRIBUTION.md) designed specifically for beginners!
-
+>
+> ❄️ **Participating in NWOC'26 (NJACK Winter of Code)?** Read our dedicated [NWOC'26 Participant Guide](PROGRAM_GUIDE.md) for issue levels (L1/L2/L3), scoring guidelines, assignment limits, and FAQs!
 
 ## Code of Conduct
 
@@ -165,6 +166,7 @@ You can develop and test the frontend completely offline without running the bac
 See the [Mock API Guide](docs/mock-api.md) for test fixtures (`octocat`, `torvalds`, `not-found`, `rate-limited`).
 
 ---
+
 ## Updating dependencies
 
 Keep dependency installations reproducible by committing the lockfiles used by the project.
@@ -200,7 +202,7 @@ After updating dependencies, install them in a clean environment and run the rel
 ### Frontend (`frontend/.env.local`)
 
 - `NEXT_PUBLIC_API_URL`: Backend API base URL (defaults to `http://localhost:8000`).
-- `NEXT_PUBLIC_USE_MOCKS`: *(Optional)* Set to `true` to run offline using realistic mock API fixtures.
+- `NEXT_PUBLIC_USE_MOCKS`: _(Optional)_ Set to `true` to run offline using realistic mock API fixtures.
 
 ---
 

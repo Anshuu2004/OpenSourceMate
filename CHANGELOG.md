@@ -10,7 +10,7 @@ All notable changes to OpenSourceMate are recorded here. The format follows
 - Data: a hand-labelled dataset of 72 GitHub issues for difficulty estimation in `data/issue-difficulty-labels.csv`, with labelling guidelines and a validation script (#258).
 - Testing: shared sanitized GitHub API response fixtures under `fixtures/` (users, repositories, languages, events, pagination, and edge cases) integrated across backend pytest tests and frontend mocks/tests (#232).
 - Documentation: architecture guide, deployment guide, roadmap, label guide, first contribution guide,
-  `.env.example` files and a polished README.
+  NWOC'26 participant guide (`PROGRAM_GUIDE.md`), `.env.example` files and a polished README (#297).
 - Frontend: FAQ section, issue bookmarks and recommendation filters, recent searches, export of analysis
   results (Markdown and JSON), a refresh button with a last-updated timestamp, a comparison of two GitHub
   profiles, skill grouping, skill proficiency indicators and a skill chart, a "skills to learn next" list,
