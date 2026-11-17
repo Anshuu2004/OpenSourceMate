@@ -22,6 +22,7 @@ Thank you for your interest in contributing to **OpenSourceMate**! OpenSourceMat
   - [Commit Message Guidelines](#commit-message-guidelines)
   - [Submitting a Pull Request](#submitting-a-pull-request)
 - [Code Style & Standards](#code-style--standards)
+- [Documentation & Translations](#documentation--translations)
 - [Community & Getting Help](#community--getting-help)
 - [Updating dependencies](#updating-dependencies)
 
@@ -243,6 +244,7 @@ npm run build
 - Run frontend lint when your changes affect frontend code.
 - Run relevant tests for any shared functionality you modify.
 - Add regression tests for bug fixes when practical.
+- If you modified `README.md`, update `README.hi.md` to keep documentation in sync.
 - Report any checks you could not run, including the reason, in your pull request description.
 
 Do not claim that a check passed unless you actually ran it successfully.
@@ -395,6 +397,15 @@ For full details, refer to the [Linting and Formatting Guide](docs/linting-and-f
 - **Python**: Follow [PEP 8](https://peps.python.org/pep-0008/) style guidelines. Use type hints where appropriate.
 - **TypeScript / React**: Use functional components with TypeScript types. Ensure code passes `npm run lint` with zero errors.
 - **Tailwind CSS**: Follow mobile-first responsive utilities and adhere to the project's dark theme palette.
+
+---
+
+## Documentation & Translations
+
+OpenSourceMate maintains multilingual documentation:
+- The project documentation is maintained in English ([`README.md`](README.md)) and Hindi ([`README.hi.md`](README.hi.md)).
+- **Keep both files in sync**: Whenever you update, add, or modify sections in `README.md`, you must also make the corresponding update in `README.hi.md`.
+- Keep commands, code snippets, file paths, URLs, and environment variable names in English across both files.
 
 ---
 

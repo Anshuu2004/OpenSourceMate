@@ -1,5 +1,7 @@
 # OpenSourceMate
 
+**English** | [हिन्दी](README.hi.md)
+
 [![CI](https://github.com/Muskankr/OpenSourceMate/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Muskankr/OpenSourceMate/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/Muskankr/OpenSourceMate?style=flat&logo=github)](https://github.com/Muskankr/OpenSourceMate/stargazers)
