@@ -85,7 +85,7 @@ We prioritize consensus-driven collaboration:
 1. **Lazy Consensus for Routine Changes**:
    - Small bug fixes, documentation improvements, dependency updates, and minor features require approval from at least one Reviewer or Maintainer. If no objections are raised, the PR is merged.
 2. **RFCs for Significant Changes**:
-   - Major features, API changes, or architectural shifts must first be proposed via a GitHub Discussion or RFC issue.
+   - Major features, API changes, or architectural shifts must first be proposed using the [RFC / Proposal Template](.github/ISSUE_TEMPLATE/proposal.yml) following our [Proposal Process](docs/proposals.md).
    - Significant architectural decisions are documented as **Architecture Decision Records (ADRs)** in [`docs/adr/`](docs/adr/).
 3. **Maintainer Consensus**:
    - Decisions affecting security policies, release versions, breaking API changes, or governance require explicit consensus among Maintainers.

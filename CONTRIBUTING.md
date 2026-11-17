@@ -17,6 +17,7 @@ Thank you for your interest in contributing to **OpenSourceMate**! OpenSourceMat
 - [Running Tests](#running-tests)
 - [Development Workflow](#development-workflow)
   - [Claiming an Issue](#claiming-an-issue)
+  - [Proposing Larger Changes (RFC Process)](#proposing-larger-changes-rfc-process)
   - [Branch Naming Conventions](#branch-naming-conventions)
   - [Commit Message Guidelines](#commit-message-guidelines)
   - [Submitting a Pull Request](#submitting-a-pull-request)
@@ -265,6 +266,29 @@ We welcome first-time contributors and experienced developers alike.
 5. Once confirmed, create a feature branch from the latest main and reference the issue in your pull request.
 
 If you can no longer work on a claimed issue, let the maintainers know so someone else can take it.
+
+---
+
+### Proposing Larger Changes (RFC Process)
+
+Before investing time writing code for major changes, please discuss the design with maintainers using our Request for Comments (RFC) proposal process.
+
+#### When a Proposal is Needed
+- **Proposal required**: Architectural changes, new subsystems, adding new third-party dependencies, database schema migrations, breaking changes to REST APIs, or major UI/UX redesigns.
+- **No proposal needed**: Routine bug fixes, documentation updates, minor UI tweaks, or adding unit tests for existing behavior.
+
+#### How to Submit
+Open a GitHub issue using the [**RFC / Proposal Template**](.github/ISSUE_TEMPLATE/proposal.yml). Detail the problem, proposed solution, alternatives, impact on API/UI, and who will implement it.
+
+#### Review Timeline & Response
+Maintainers will review the proposal and provide initial feedback within **3 to 5 business days**.
+
+#### Approval & Implementation
+1. **Consensus**: Maintainers and community members discuss technical trade-offs in the issue comments.
+2. **Approval**: Once consensus is reached, a maintainer applies the `approved` label and assigns the issue. If architectural decisions are made, an ADR is recorded in [`docs/adr/`](docs/adr/).
+3. **Implementation**: Only after approval, create your feature branch (`feat/<feature-name>`) and begin implementation.
+
+For a summary table and guidelines, see the [RFC & Proposal Process Guide](docs/proposals.md).
 
 ---
 

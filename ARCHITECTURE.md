@@ -86,7 +86,7 @@ flowchart TD
 ```text
 OpenSourceMate/
 ├── .github/                       # GitHub actions workflows, issue and PR templates
-│   ├── ISSUE_TEMPLATE/            # Templates for bug reports and feature requests
+│   ├── ISSUE_TEMPLATE/            # Templates for bug reports, feature requests, and RFC proposals (#295)
 │   ├── workflows/ci.yml           # Automated CI running backend tests and frontend linter/build
 │   └── PULL_REQUEST_TEMPLATE.md   # Standard pull request description guidelines
 │

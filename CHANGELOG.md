@@ -7,6 +7,7 @@ All notable changes to OpenSourceMate are recorded here. The format follows
 
 ### Added
 
+- Tooling & Documentation: RFC / change proposal template in `.github/ISSUE_TEMPLATE/proposal.yml` and RFC review process in `CONTRIBUTING.md` and `docs/proposals.md` for proposing larger changes (#295).
 - Documentation: community support channels and sensitive data guidelines in `SUPPORT.md`, and project governance, roles, decision-making, and contributor progression pathways in `GOVERNANCE.md` (#296).
 - Data: a hand-labelled dataset of 72 GitHub issues for difficulty estimation in `data/issue-difficulty-labels.csv`, with labelling guidelines and a validation script (#258).
 - Testing: shared sanitized GitHub API response fixtures under `fixtures/` (users, repositories, languages, events, pagination, and edge cases) integrated across backend pytest tests and frontend mocks/tests (#232).

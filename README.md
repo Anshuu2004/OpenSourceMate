@@ -587,7 +587,7 @@ Open an issue and include:
 - Actual behavior
 - Screenshots or logs when useful
 
-For larger changes, discuss the idea before starting implementation.
+For larger changes, please submit an [RFC Proposal](.github/ISSUE_TEMPLATE/proposal.yml) following our [Proposal Process](CONTRIBUTING.md#proposing-larger-changes-rfc-process) before starting implementation.
 
 ---
 
