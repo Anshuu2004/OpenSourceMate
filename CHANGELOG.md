@@ -16,6 +16,7 @@ All notable changes to OpenSourceMate are recorded here. The format follows
   profiles, skill grouping, skill proficiency indicators and a skill chart, a "skills to learn next" list,
   pagination of GitHub repositories, a service-unavailable banner, custom 404 and error pages, SEO basics,
   a privacy page and a keyboard shortcut for the navbar.
+- Frontend: inline SVG technology icons for 25+ common languages and frameworks in the skill list, accompanied by a neutral fallback icon, documented permissive licenses (`frontend/components/icons/LICENSE.md`), strict CSP preservation, accessibility (`aria-hidden`), and light/dark mode support (#299).
 - Backend: environment-based settings, serializers and a health endpoint, structured logging with request
   ids, OpenAPI docs under `/api/v1`, and LLM-written explanations for why an issue matches.
 - Tooling: ESLint, Prettier and pre-commit hooks, root development scripts, a welcome workflow for
