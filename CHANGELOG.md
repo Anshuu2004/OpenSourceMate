@@ -16,6 +16,7 @@ All notable changes to OpenSourceMate are recorded here. The format follows
 - Documentation: community support channels and sensitive data guidelines in `SUPPORT.md`, and project governance, roles, decision-making, and contributor progression pathways in `GOVERNANCE.md` (#296).
 - Frontend: a pre-filled Wrong match report link on each recommendation card and a dedicated GitHub issue form (#308).
 - Frontend: persistent Not interested controls with Show hidden and Undo for recommended issues (#301).
+- Backend: an Atom feed of ranked issue recommendations for each public GitHub username (#306).
 - Data: a hand-labelled dataset of 72 GitHub issues for difficulty estimation in `data/issue-difficulty-labels.csv`, with labelling guidelines and a validation script (#258).
 - Testing: shared sanitized GitHub API response fixtures under `fixtures/` (users, repositories, languages, events, pagination, and edge cases) integrated across backend pytest tests and frontend mocks/tests (#232).
 - Documentation: architecture guide, deployment guide, roadmap, label guide, first contribution guide,
