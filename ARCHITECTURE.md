@@ -154,8 +154,11 @@ OpenSourceMate/
 │
 ├── docs/                          # Architectural specs, audits, and contributor guides
 ├── CONTRIBUTING.md                # Contributor setup, PR process, and code standards
+├── GOVERNANCE.md                  # Project governance, roles, decisions, and progression (#296)
 ├── LICENSE                        # MIT License
-└── README.md                      # Project documentation and quick start guide
+├── README.md                      # Project documentation and quick start guide
+├── SECURITY.md                    # Vulnerability reporting policy and security disclosures
+└── SUPPORT.md                     # Support channels, discussions, bug reporting, and secrets guide (#296)
 ```
 
 ---

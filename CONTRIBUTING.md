@@ -30,7 +30,6 @@ Thank you for your interest in contributing to **OpenSourceMate**! OpenSourceMat
 
 > 🐣 **First time contributing to open source or Git?** Check out our step-by-step [First Contribution Guide](FIRST_CONTRIBUTION.md) designed specifically for beginners!
 
-
 ## Code of Conduct
 
 We are committed to providing a friendly, safe, and welcoming environment for everyone, regardless of experience level, gender, sexual orientation, disability, personal appearance, body size, race, ethnicity, age, religion, or nationality.
@@ -165,6 +164,7 @@ You can develop and test the frontend completely offline without running the bac
 See the [Mock API Guide](docs/mock-api.md) for test fixtures (`octocat`, `torvalds`, `not-found`, `rate-limited`).
 
 ---
+
 ## Updating dependencies
 
 Keep dependency installations reproducible by committing the lockfiles used by the project.
@@ -200,7 +200,7 @@ After updating dependencies, install them in a clean environment and run the rel
 ### Frontend (`frontend/.env.local`)
 
 - `NEXT_PUBLIC_API_URL`: Backend API base URL (defaults to `http://localhost:8000`).
-- `NEXT_PUBLIC_USE_MOCKS`: *(Optional)* Set to `true` to run offline using realistic mock API fixtures.
+- `NEXT_PUBLIC_USE_MOCKS`: _(Optional)_ Set to `true` to run offline using realistic mock API fixtures.
 
 ---
 
@@ -378,7 +378,9 @@ For full details, refer to the [Linting and Formatting Guide](docs/linting-and-f
 
 If you have questions, run into issues, or want to discuss ideas:
 
-- Open an [Issue](https://github.com/Muskankr/OpenSourceMate/issues) on GitHub.
-- Clearly describe your question or suggestion.
+- Read our [Support Guide](SUPPORT.md) on where to ask questions (Discussions vs Issues), what details to provide, and where not to post secrets.
+- Start or join a conversation in [GitHub Discussions](https://github.com/Muskankr/OpenSourceMate/discussions).
+- Check [GOVERNANCE.md](GOVERNANCE.md) to learn about contributor roles, the decision-making process, conflict resolution, and moving from contributor to reviewer/maintainer.
+- For security vulnerabilities, review [SECURITY.md](SECURITY.md).
 
 Thank you for contributing to OpenSourceMate!

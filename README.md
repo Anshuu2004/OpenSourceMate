@@ -45,6 +45,8 @@ The project is being developed with a focus on making open-source contribution d
 - [🤝 Contributing](#-contributing)
 - [👥 Contributors](#-contributors)
 - [🐛 Issues & Feature Requests](#-issues--feature-requests)
+- [💬 Support](#-support)
+- [🏛️ Governance](#%EF%B8%8F-governance)
 - [🔒 Security](#-security)
 - [📚 Project Vision](#-project-vision)
 - [🌱 Contributing Areas](#-contributing-areas)
@@ -586,6 +588,31 @@ Open an issue and include:
 - Screenshots or logs when useful
 
 For larger changes, discuss the idea before starting implementation.
+
+---
+
+## 💬 Support
+
+Need help setting up OpenSourceMate, debugging an issue, or understanding the project?
+
+- **Q&A & Discussions**: Ask questions, discuss architectures, or share ideas in [GitHub Discussions](https://github.com/Muskankr/OpenSourceMate/discussions).
+- **Bug Reports**: Open a [GitHub Issue](https://github.com/Muskankr/OpenSourceMate/issues) with reproduction steps and sanitized logs.
+- **Important**: Never post API keys, access tokens, or private secrets in public issues or discussions.
+
+For detailed support guidelines and checklists, see [SUPPORT.md](SUPPORT.md).
+
+---
+
+## 🏛️ Governance
+
+OpenSourceMate is governed openly and transparently:
+
+- **Roles**: Contributor, Reviewer, and Maintainer / Project Lead ([@Muskankr](https://github.com/Muskankr)).
+- **Progression**: Clear, meritocratic pathways from contributor to reviewer and maintainer.
+- **Decisions & Consensus**: Open discussion via RFCs, Lazy Consensus for routine fixes, and Architecture Decision Records ([`docs/adr/`](docs/adr/)).
+- **Conflict Resolution**: Data-driven technical discussions, Code of Conduct enforcement, and Project Admin tie-breaking.
+
+For the complete governance model, read [GOVERNANCE.md](GOVERNANCE.md).
 
 ---
 
