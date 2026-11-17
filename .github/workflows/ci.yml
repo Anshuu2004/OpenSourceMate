@@ -41,8 +41,35 @@ jobs:
       - name: Type-Check
         run: npx tsc --noEmit
 
-      - name: Run unit & integration tests
-        run: npm test -- --ci
+      - name: Run unit & integration tests with coverage
+        run: npm run test:coverage -- --ci
+
+      - name: Report Frontend Coverage Summary
+        if: always()
+        run: |
+          echo "### 🎨 Frontend Coverage Summary" >> $GITHUB_STEP_SUMMARY
+          if [ -f coverage/coverage-summary.json ]; then
+            node -e "
+              const fs = require('fs');
+              const data = JSON.parse(fs.readFileSync('coverage/coverage-summary.json', 'utf8'));
+              const total = data.total;
+              console.log('| Metric | Percentage | Covered / Total |');
+              console.log('| :--- | :--- | :--- |');
+              console.log(\`| Lines | \${total.lines.pct}% | \${total.lines.covered} / \${total.lines.total} |\`);
+              console.log(\`| Statements | \${total.statements.pct}% | \${total.statements.covered} / \${total.statements.total} |\`);
+              console.log(\`| Functions | \${total.functions.pct}% | \${total.functions.covered} / \${total.functions.total} |\`);
+              console.log(\`| Branches | \${total.branches.pct}% | \${total.branches.covered} / \${total.branches.total} |\`);
+              console.log('\n*Thresholds enforced: 50% statements, 50% branches, 50% functions, 50% lines*');
+            " >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Upload frontend coverage artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-coverage-report
+          path: frontend/coverage/
+          if-no-files-found: ignore
 
       - name: Production build
         run: npm run build
@@ -80,5 +107,38 @@ jobs:
       - name: Type check with mypy
         run: mypy app --config-file mypy.ini
 
-      - name: Run tests
-        run: python -m pytest -q
+      - name: Run tests with coverage
+        run: python -m pytest -v --cov=app --cov-report=term-missing --cov-report=xml:coverage.xml --cov-report=html:htmlcov --cov-fail-under=80
+
+      - name: Report Backend Coverage Summary
+        if: always()
+        run: |
+          echo "### 📊 Backend Coverage Summary" >> $GITHUB_STEP_SUMMARY
+          if [ -f coverage.xml ]; then
+            python -c "
+          import xml.etree.ElementTree as ET
+          try:
+              tree = ET.parse('coverage.xml')
+              root = tree.getroot()
+              line_rate = float(root.attrib.get('line-rate', 0)) * 100
+              branch_rate = float(root.attrib.get('branch-rate', 0)) * 100
+              print('| Metric | Coverage | Threshold | Status |')
+              print('| :--- | :--- | :--- | :--- |')
+              status = '✅ PASS' if line_rate >= 80 else '❌ FAIL'
+              print(f'| Line Coverage | {line_rate:.2f}% | 80.0% | {status} |')
+              print(f'| Branch Coverage | {branch_rate:.2f}% | Baseline | ℹ️ Reported |')
+              print('\n*Threshold enforced: 80% minimum line coverage*')
+          except Exception as e:
+              print(f'Coverage parsed with note: {e}')
+          " >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Upload backend coverage artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-coverage-report
+          path: |
+            backend/coverage.xml
+            backend/htmlcov/
+          if-no-files-found: ignore

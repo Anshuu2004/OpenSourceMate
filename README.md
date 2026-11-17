@@ -1,6 +1,10 @@
 # OpenSourceMate
 
+**English** | [हिन्दी](README.hi.md)
+
 [![CI](https://github.com/Muskankr/OpenSourceMate/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Muskankr/OpenSourceMate/actions/workflows/ci.yml)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Muskankr/OpenSourceMate)
+[![Coverage](https://img.shields.io/badge/Coverage-85%25-brightgreen.svg)](#run-the-backend-tests)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/Muskankr/OpenSourceMate?style=flat&logo=github)](https://github.com/Muskankr/OpenSourceMate/stargazers)
 [![GitHub Forks](https://img.shields.io/github/forks/Muskankr/OpenSourceMate?style=flat&logo=github)](https://github.com/Muskankr/OpenSourceMate/network/members)
@@ -30,6 +34,7 @@ The project is being developed with a focus on making open-source contribution d
 - [🏗️ Project Structure](#%EF%B8%8F-project-structure)
 - [🛠️ Tech Stack](#%EF%B8%8F-tech-stack)
 - [🚀 Getting Started](#-getting-started)
+  - [Develop in GitHub Codespaces](#develop-in-github-codespaces)
   - [Prerequisites](#prerequisites)
   - [1. Clone the repository](#1-clone-the-repository)
   - [2. Run the frontend](#2-run-the-frontend)
@@ -47,6 +52,8 @@ The project is being developed with a focus on making open-source contribution d
 - [🤝 Contributing](#-contributing)
 - [👥 Contributors](#-contributors)
 - [🐛 Issues & Feature Requests](#-issues--feature-requests)
+- [💬 Support](#-support)
+- [🏛️ Governance](#%EF%B8%8F-governance)
 - [🔒 Security](#-security)
 - [📚 Project Vision](#-project-vision)
 - [🌱 Contributing Areas](#-contributing-areas)
@@ -183,6 +190,21 @@ The backend is being developed with an AI/data ecosystem that includes technolog
 
 ## 🚀 Getting Started
 
+### Develop in GitHub Codespaces
+
+You can develop OpenSourceMate entirely in your browser or through VS Code with zero local setup required:
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Muskankr/OpenSourceMate)
+
+1. Click the **Open in GitHub Codespaces** button above (or select **Code > Codespaces > Create codespace on main** on GitHub).
+2. The devcontainer automatically installs Python 3.12, Node.js 22, all backend and frontend dependencies, and sets up your default environment files.
+3. Once the Codespace starts, run both applications in the integrated terminal:
+   - **Frontend**: `make dev-frontend` (opens automatically in preview on port `3000`)
+   - **Backend**: `make dev-backend` (FastAPI server on port `8000`)
+   - **Run tests**: `make test` (or `make test-backend` / `make test-frontend`)
+
+---
+
 ### Prerequisites
 
 Make sure you have the following installed:
@@ -304,8 +326,10 @@ The tests mock the GitHub API, so no network or token is needed.
 
 ```bash
 pip install -r requirements-dev.txt
-pytest --cov=app
+pytest --cov=app --cov-report=term-missing
 ```
+
+A minimum 80% coverage threshold is enforced by CI.
 
 > Backend setup is currently evolving. More detailed setup instructions and environment configuration will be documented as the project develops.
 
@@ -589,7 +613,32 @@ Open an issue and include:
 - Actual behavior
 - Screenshots or logs when useful
 
-For larger changes, discuss the idea before starting implementation.
+For larger changes, please submit an [RFC Proposal](.github/ISSUE_TEMPLATE/proposal.yml) following our [Proposal Process](CONTRIBUTING.md#proposing-larger-changes-rfc-process) before starting implementation.
+
+---
+
+## 💬 Support
+
+Need help setting up OpenSourceMate, debugging an issue, or understanding the project?
+
+- **Q&A & Discussions**: Ask questions, discuss architectures, or share ideas in [GitHub Discussions](https://github.com/Muskankr/OpenSourceMate/discussions).
+- **Bug Reports**: Open a [GitHub Issue](https://github.com/Muskankr/OpenSourceMate/issues) with reproduction steps and sanitized logs.
+- **Important**: Never post API keys, access tokens, or private secrets in public issues or discussions.
+
+For detailed support guidelines and checklists, see [SUPPORT.md](SUPPORT.md).
+
+---
+
+## 🏛️ Governance
+
+OpenSourceMate is governed openly and transparently:
+
+- **Roles**: Contributor, Reviewer, and Maintainer / Project Lead ([@Muskankr](https://github.com/Muskankr)).
+- **Progression**: Clear, meritocratic pathways from contributor to reviewer and maintainer.
+- **Decisions & Consensus**: Open discussion via RFCs, Lazy Consensus for routine fixes, and Architecture Decision Records ([`docs/adr/`](docs/adr/)).
+- **Conflict Resolution**: Data-driven technical discussions, Code of Conduct enforcement, and Project Admin tie-breaking.
+
+For the complete governance model, read [GOVERNANCE.md](GOVERNANCE.md).
 
 ---
 

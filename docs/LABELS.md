@@ -44,11 +44,12 @@ For complete program rules, claiming workflows, and FAQs, see the [NWOC'26 Progr
 
 ## Status
 
-| Label | Meaning |
-
-| 'needs-triage' | New issue that maintainers have not reviewed yet |
-
-| 'in-progress' | Someone is already working on it. Please pick another issue. |
+| Label              | Meaning                                                                        |
+| ------------------ | ------------------------------------------------------------------------------ |
+| 'needs-triage'     | New issue that maintainers have not reviewed yet                               |
+| 'in-progress'      | Someone is already working on it. Please pick another issue.                   |
+| 'on-hold'          | Temporarily paused by contributor request; exempt from automated unassignment  |
+| 'stale-assignment' | Inactive for 5 days; awaiting contributor update before automated unassignment |
 
 ## How to pick an issue
 
