@@ -1213,7 +1213,13 @@ export default function Home() {
                   {!loadingMatching && filteredRecommendations.length > 0 && (
                     <div className="mt-6 space-y-4">
                       {filteredRecommendations.map((issue) => (
-                        <IssueCard key={issue.id} issue={issue} theme={theme} isMock={isDemoData} />
+                        <IssueCard
+                          key={issue.id}
+                          issue={issue}
+                          theme={theme}
+                          isMock={isDemoData}
+                          username={profile?.username || username}
+                        />
                       ))}
                     </div>
                   )}

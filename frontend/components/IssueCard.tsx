@@ -8,12 +8,14 @@ export interface IssueCardProps {
   issue: IssueRecommendation;
   theme?: "dark" | "light";
   isMock?: boolean;
+  username?: string;
 }
 
 export default function IssueCard({
   issue,
   theme = "dark",
   isMock = false,
+  username = "",
 }: IssueCardProps) {
   const isDark = theme === "dark";
 
@@ -25,6 +27,12 @@ export default function IssueCard({
   );
 
   const score = Math.round(issue.match_score ?? issue.score ?? 0);
+  const feedbackUrl = `https://github.com/Muskankr/OpenSourceMate/issues/new?${new URLSearchParams({
+    template: "wrong_match.yml",
+    username: username.trim(),
+    issue_url: issue.url,
+    match_score: String(score),
+  })}`;
   const reasons = issue.match_reasons ?? issue.reasons ?? [];
 
   // Determine difficulty
@@ -259,6 +267,17 @@ export default function IssueCard({
             }`}
           >
             View on GitHub ↗
+          </a>
+          <a
+            href={feedbackUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Report wrong match for "${issue.title}" on GitHub in a new tab`}
+            className={`rounded text-xs underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 ${
+              isDark ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"
+            }`}
+          >
+            Wrong match?
           </a>
         </div>
       </div>
