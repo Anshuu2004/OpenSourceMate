@@ -3,6 +3,7 @@
 [English](README.md) | **हिन्दी**
 
 [![CI](https://github.com/Muskankr/OpenSourceMate/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Muskankr/OpenSourceMate/actions/workflows/ci.yml)
+[![Coverage](https://img.shields.io/badge/Coverage-85%25-brightgreen.svg)](#बैकएंड-टेस्ट-चलाएं-run-the-backend-tests)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/Muskankr/OpenSourceMate?style=flat&logo=github)](https://github.com/Muskankr/OpenSourceMate/stargazers)
 [![GitHub Forks](https://img.shields.io/github/forks/Muskankr/OpenSourceMate?style=flat&logo=github)](https://github.com/Muskankr/OpenSourceMate/network/members)
@@ -307,8 +308,10 @@ http://localhost:8000
 
 ```bash
 pip install -r requirements-dev.txt
-pytest --cov=app
+pytest --cov=app --cov-report=term-missing
 ```
+
+CI द्वारा न्यूनतम 80% कवरेज सीमा (coverage threshold) अनिवार्य की गई है।
 
 > बैकएंड सेटअप वर्तमान में निरंतर विकसित हो रहा है। प्रोजेक्ट के आगे बढ़ने के साथ अधिक विस्तृत सेटअप निर्देश और एनवायरनमेंट कॉन्फ़िगरेशन प्रलेखित किए जाएंगे।
 

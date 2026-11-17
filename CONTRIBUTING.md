@@ -14,7 +14,7 @@ Thank you for your interest in contributing to **OpenSourceMate**! OpenSourceMat
   - [2. Backend Setup (FastAPI)](#2-backend-setup-fastapi)
   - [3. Frontend Setup (Next.js)](#3-frontend-setup-nextjs)
 - [Environment Configuration](#environment-configuration)
-- [Running Tests](#running-tests)
+- [Running Tests & Coverage](#running-tests--coverage)
 - [Development Workflow](#development-workflow)
   - [Claiming an Issue](#claiming-an-issue)
   - [Proposing Larger Changes (RFC Process)](#proposing-larger-changes-rfc-process)
@@ -206,42 +206,41 @@ After updating dependencies, install them in a clean environment and run the rel
 
 ---
 
-## Running Tests
+## Running Tests & Coverage
 
-OpenSourceMate includes automated unit tests.
+OpenSourceMate enforces automated test suites and coverage thresholds in CI.
 
-To run the backend tests:
+### Backend Tests & Coverage (pytest-cov)
+
+Run tests and generate coverage reports:
 
 ```bash
 cd backend
-pytest
+pytest --cov=app --cov-report=term-missing
 ```
 
-Or using Python's built-in test runner:
+- **Threshold**: Minimum **80%** line coverage.
+- If coverage falls below 80% (or tests are removed without justification), CI fails loudly.
+- An HTML report is output to `backend/htmlcov/` and XML to `backend/coverage.xml`.
 
-```bash
-python -m unittest discover -s tests
-```
+### Frontend Tests & Coverage (Jest)
 
-To run Frontend lint and build: \
-From the repository root:
+Run frontend tests and generate coverage summaries:
 
 ```bash
 cd frontend
-npm install
-npm run lint
+npm run test:coverage
 ```
 
-To verify the production build:
+- **Thresholds**: Minimum **50%** across statements, branches, functions, and lines.
+- Summaries are written to `frontend/coverage/` and published in CI summaries.
 
-```bash
-npm run build
-```
+---
 
-**Before opening a pull request**
+### Before opening a pull request
 
-- Run the backend test suite when your changes affect backend behavior.
-- Run frontend lint when your changes affect frontend code.
+- Run backend tests and verify coverage meets the 80% threshold.
+- Run frontend lint and tests (`npm run test:coverage`).
 - Run relevant tests for any shared functionality you modify.
 - Add regression tests for bug fixes when practical.
 - If you modified `README.md`, update `README.hi.md` to keep documentation in sync.
@@ -276,16 +275,20 @@ If you can no longer work on a claimed issue, let the maintainers know so someon
 Before investing time writing code for major changes, please discuss the design with maintainers using our Request for Comments (RFC) proposal process.
 
 #### When a Proposal is Needed
+
 - **Proposal required**: Architectural changes, new subsystems, adding new third-party dependencies, database schema migrations, breaking changes to REST APIs, or major UI/UX redesigns.
 - **No proposal needed**: Routine bug fixes, documentation updates, minor UI tweaks, or adding unit tests for existing behavior.
 
 #### How to Submit
+
 Open a GitHub issue using the [**RFC / Proposal Template**](.github/ISSUE_TEMPLATE/proposal.yml). Detail the problem, proposed solution, alternatives, impact on API/UI, and who will implement it.
 
 #### Review Timeline & Response
+
 Maintainers will review the proposal and provide initial feedback within **3 to 5 business days**.
 
 #### Approval & Implementation
+
 1. **Consensus**: Maintainers and community members discuss technical trade-offs in the issue comments.
 2. **Approval**: Once consensus is reached, a maintainer applies the `approved` label and assigns the issue. If architectural decisions are made, an ADR is recorded in [`docs/adr/`](docs/adr/).
 3. **Implementation**: Only after approval, create your feature branch (`feat/<feature-name>`) and begin implementation.
@@ -403,6 +406,7 @@ For full details, refer to the [Linting and Formatting Guide](docs/linting-and-f
 ## Documentation & Translations
 
 OpenSourceMate maintains multilingual documentation:
+
 - The project documentation is maintained in English ([`README.md`](README.md)) and Hindi ([`README.hi.md`](README.hi.md)).
 - **Keep both files in sync**: Whenever you update, add, or modify sections in `README.md`, you must also make the corresponding update in `README.hi.md`.
 - Keep commands, code snippets, file paths, URLs, and environment variable names in English across both files.

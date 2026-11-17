@@ -3,6 +3,7 @@
 **English** | [हिन्दी](README.hi.md)
 
 [![CI](https://github.com/Muskankr/OpenSourceMate/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Muskankr/OpenSourceMate/actions/workflows/ci.yml)
+[![Coverage](https://img.shields.io/badge/Coverage-85%25-brightgreen.svg)](#run-the-backend-tests)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/Muskankr/OpenSourceMate?style=flat&logo=github)](https://github.com/Muskankr/OpenSourceMate/stargazers)
 [![GitHub Forks](https://img.shields.io/github/forks/Muskankr/OpenSourceMate?style=flat&logo=github)](https://github.com/Muskankr/OpenSourceMate/network/members)
@@ -306,8 +307,10 @@ The tests mock the GitHub API, so no network or token is needed.
 
 ```bash
 pip install -r requirements-dev.txt
-pytest --cov=app
+pytest --cov=app --cov-report=term-missing
 ```
+
+A minimum 80% coverage threshold is enforced by CI.
 
 > Backend setup is currently evolving. More detailed setup instructions and environment configuration will be documented as the project develops.
 
