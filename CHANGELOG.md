@@ -7,6 +7,7 @@ All notable changes to OpenSourceMate are recorded here. The format follows
 
 ### Added
 
+- Data: curated directory of welcoming open-source projects in `data/curated-projects.json` tagged with student and mentorship programs (GSoC, Outreachy, Hacktoberfest, LFX Mentorship), verifiable proof links, JSON schema, and a validation script (#298).
 - Data: a hand-labelled dataset of 72 GitHub issues for difficulty estimation in `data/issue-difficulty-labels.csv`, with labelling guidelines and a validation script (#258).
 - Testing: shared sanitized GitHub API response fixtures under `fixtures/` (users, repositories, languages, events, pagination, and edge cases) integrated across backend pytest tests and frontend mocks/tests (#232).
 - Documentation: architecture guide, deployment guide, roadmap, label guide, first contribution guide,
