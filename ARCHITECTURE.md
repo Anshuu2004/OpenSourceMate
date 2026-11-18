@@ -163,6 +163,7 @@ OpenSourceMate/
 ├── CONTRIBUTING.md                # Contributor setup, PR process, and code standards
 ├── GOVERNANCE.md                  # Project governance, roles, decisions, and progression (#296)
 ├── LICENSE                        # MIT License
+├── PROGRAM_GUIDE.md               # NWOC'26 participant guide (levels, scoring, FAQs) (#297)
 ├── README.md                      # Project documentation and quick start guide
 ├── README.hi.md                   # Hindi translation of project documentation (#294)
 ├── SECURITY.md                    # Vulnerability reporting policy and security disclosures
