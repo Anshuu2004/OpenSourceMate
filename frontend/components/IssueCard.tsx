@@ -9,6 +9,9 @@ export interface IssueCardProps {
   theme?: "dark" | "light";
   isMock?: boolean;
   username?: string;
+  isHidden?: boolean;
+  onHide?: () => void;
+  onRestore?: () => void;
 }
 
 export default function IssueCard({
@@ -16,6 +19,9 @@ export default function IssueCard({
   theme = "dark",
   isMock = false,
   username = "",
+  isHidden = false,
+  onHide,
+  onRestore,
 }: IssueCardProps) {
   const isDark = theme === "dark";
 
@@ -279,6 +285,17 @@ export default function IssueCard({
           >
             Wrong match?
           </a>
+          {(isHidden ? onRestore : onHide) && (
+            <button
+              type="button"
+              onClick={isHidden ? onRestore : onHide}
+              className={`rounded text-xs underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 ${
+                isDark ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"
+              }`}
+            >
+              {isHidden ? "Undo" : "Not interested"}
+            </button>
+          )}
         </div>
       </div>
     </article>
