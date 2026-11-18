@@ -413,6 +413,7 @@ export default function RecommendedIssuesList({
               issue={issue}
               theme={theme}
               isMock={isDemo}
+              username={username}
             />
           ))}
         </div>

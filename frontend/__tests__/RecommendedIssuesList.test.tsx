@@ -20,6 +20,23 @@ describe("RecommendedIssuesList Component", () => {
     ).toBeInTheDocument();
   });
 
+  it("provides a distinct pre-filled feedback link for every recommendation", () => {
+    render(
+      <RecommendedIssuesList issues={MOCK_RECOMMENDED_ISSUES} username="octocat" />
+    );
+
+    const links = screen.getAllByRole("link", { name: /Report wrong match for/i });
+    expect(links).toHaveLength(MOCK_RECOMMENDED_ISSUES.length);
+    links.forEach((link, index) => {
+      const params = new URL(link.getAttribute("href")!).searchParams;
+      expect(params.get("username")).toBe("octocat");
+      expect(params.get("issue_url")).toBe(MOCK_RECOMMENDED_ISSUES[index].url);
+      expect(params.get("match_score")).toBe(
+        String(Math.round(MOCK_RECOMMENDED_ISSUES[index].match_score ?? MOCK_RECOMMENDED_ISSUES[index].score ?? 0))
+      );
+    });
+  });
+
   it("shows demo data / coming soon banner when isMock is true", () => {
     render(
       <RecommendedIssuesList issues={MOCK_RECOMMENDED_ISSUES} isMock={true} username="octocat" />
