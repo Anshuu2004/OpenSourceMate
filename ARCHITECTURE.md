@@ -159,6 +159,11 @@ OpenSourceMate/
 │       ├── recentSearches.ts      # LocalStorage manager for search history
 │       └── validation.ts          # Username format validation regex
 │
+├── data/                          # Dataset files, curation schemas, and benchmark data
+│   ├── curated-projects.json      # Curated welcoming open-source projects with program tags (#298)
+│   ├── curated-projects.schema.json # JSON Schema for curated projects
+│   └── issue-difficulty-labels.csv# Hand-labelled difficulty evaluation dataset
+│
 ├── docs/                          # Architectural specs, audits, and contributor guides
 ├── CONTRIBUTING.md                # Contributor setup, PR process, and code standards
 ├── GOVERNANCE.md                  # Project governance, roles, decisions, and progression (#296)

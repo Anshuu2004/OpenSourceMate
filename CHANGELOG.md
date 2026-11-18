@@ -7,6 +7,7 @@ All notable changes to OpenSourceMate are recorded here. The format follows
 
 ### Added
 
+- Data: curated directory of welcoming open-source projects in `data/curated-projects.json` tagged with student and mentorship programs (GSoC, Outreachy, Hacktoberfest, LFX Mentorship), verifiable proof links, JSON schema, and a validation script (#298).
 - Tooling & Development: devcontainer configuration in `.devcontainer/devcontainer.json` and `.devcontainer/post-create.sh` for one-click GitHub Codespaces cloud development with Python 3.12, Node.js 22, automatic port forwarding (3000, 8000), and "Open in Codespaces" badges in `README.md` and `README.hi.md` (#264).
 - Automation & Workflow: scheduled workflow in `.github/workflows/inactive-assignees.yml` and `.github/scripts/check-inactive-assignees.js` that kindly nudges assignees inactive for 5 days and unassigns after 7 days, with `on-hold` exemption policy documented in `CONTRIBUTING.md` and `docs/LABELS.md` (#265).
 - CI & Testing: automated test coverage reporting with pytest-cov (80% threshold) and Jest (50% threshold), PR step summary reports, coverage badges in `README.md` and `README.hi.md`, and local coverage scripts (#269).
