@@ -10,17 +10,21 @@ Thank you for your interest in contributing to **OpenSourceMate**! OpenSourceMat
 - [Prerequisites](#prerequisites)
 - [Project Architecture](#project-architecture)
 - [Getting Started & Local Setup](#getting-started--local-setup)
+  - [Cloud Setup (GitHub Codespaces)](#cloud-setup-github-codespaces)
   - [1. Fork and Clone](#1-fork-and-clone)
   - [2. Backend Setup (FastAPI)](#2-backend-setup-fastapi)
   - [3. Frontend Setup (Next.js)](#3-frontend-setup-nextjs)
 - [Environment Configuration](#environment-configuration)
-- [Running Tests](#running-tests)
+- [Running Tests & Coverage](#running-tests--coverage)
 - [Development Workflow](#development-workflow)
   - [Claiming an Issue](#claiming-an-issue)
+  - [Issue Assignment & Inactivity Policy](#issue-assignment--inactivity-policy)
+  - [Proposing Larger Changes (RFC Process)](#proposing-larger-changes-rfc-process)
   - [Branch Naming Conventions](#branch-naming-conventions)
   - [Commit Message Guidelines](#commit-message-guidelines)
   - [Submitting a Pull Request](#submitting-a-pull-request)
 - [Code Style & Standards](#code-style--standards)
+- [Documentation & Translations](#documentation--translations)
 - [Community & Getting Help](#community--getting-help)
 - [Updating dependencies](#updating-dependencies)
 
@@ -29,7 +33,8 @@ Thank you for your interest in contributing to **OpenSourceMate**! OpenSourceMat
 ## Not sure where to start? Read the [Label Guide](docs/LABELS.md) and check our [Roadmap](ROADMAP.md).
 
 > 🐣 **First time contributing to open source or Git?** Check out our step-by-step [First Contribution Guide](FIRST_CONTRIBUTION.md) designed specifically for beginners!
-
+>
+> ❄️ **Participating in NWOC'26 (NJACK Winter of Code)?** Read our dedicated [NWOC'26 Participant Guide](PROGRAM_GUIDE.md) for issue levels (L1/L2/L3), scoring guidelines, assignment limits, and FAQs!
 
 ## Code of Conduct
 
@@ -83,6 +88,19 @@ OpenSourceMate/
 ---
 
 ## Getting Started & Local Setup
+
+### Cloud Setup (GitHub Codespaces)
+
+Prefer not to set up Python and Node.js locally? You can start contributing immediately in your browser or VS Code using GitHub Codespaces:
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Muskankr/OpenSourceMate)
+
+- Dependencies and environment files are installed automatically on creation.
+- Ports `3000` (frontend) and `8000` (backend) are pre-configured and forwarded automatically.
+- Start the frontend: `make dev-frontend` (or `cd frontend && npm run dev`)
+- Start the backend: `make dev-backend` (or `cd backend && uvicorn app.main:app --reload --port 8000`)
+
+---
 
 ### 1. Fork and Clone
 
@@ -165,6 +183,7 @@ You can develop and test the frontend completely offline without running the bac
 See the [Mock API Guide](docs/mock-api.md) for test fixtures (`octocat`, `torvalds`, `not-found`, `rate-limited`).
 
 ---
+
 ## Updating dependencies
 
 Keep dependency installations reproducible by committing the lockfiles used by the project.
@@ -200,48 +219,48 @@ After updating dependencies, install them in a clean environment and run the rel
 ### Frontend (`frontend/.env.local`)
 
 - `NEXT_PUBLIC_API_URL`: Backend API base URL (defaults to `http://localhost:8000`).
-- `NEXT_PUBLIC_USE_MOCKS`: *(Optional)* Set to `true` to run offline using realistic mock API fixtures.
+- `NEXT_PUBLIC_USE_MOCKS`: _(Optional)_ Set to `true` to run offline using realistic mock API fixtures.
 
 ---
 
-## Running Tests
+## Running Tests & Coverage
 
-OpenSourceMate includes automated unit tests.
+OpenSourceMate enforces automated test suites and coverage thresholds in CI.
 
-To run the backend tests:
+### Backend Tests & Coverage (pytest-cov)
+
+Run tests and generate coverage reports:
 
 ```bash
 cd backend
-pytest
+pytest --cov=app --cov-report=term-missing
 ```
 
-Or using Python's built-in test runner:
+- **Threshold**: Minimum **80%** line coverage.
+- If coverage falls below 80% (or tests are removed without justification), CI fails loudly.
+- An HTML report is output to `backend/htmlcov/` and XML to `backend/coverage.xml`.
 
-```bash
-python -m unittest discover -s tests
-```
+### Frontend Tests & Coverage (Jest)
 
-To run Frontend lint and build: \
-From the repository root:
+Run frontend tests and generate coverage summaries:
 
 ```bash
 cd frontend
-npm install
-npm run lint
+npm run test:coverage
 ```
 
-To verify the production build:
+- **Thresholds**: Minimum **50%** across statements, branches, functions, and lines.
+- Summaries are written to `frontend/coverage/` and published in CI summaries.
 
-```bash
-npm run build
-```
+---
 
-**Before opening a pull request**
+### Before opening a pull request
 
-- Run the backend test suite when your changes affect backend behavior.
-- Run frontend lint when your changes affect frontend code.
+- Run backend tests and verify coverage meets the 80% threshold.
+- Run frontend lint and tests (`npm run test:coverage`).
 - Run relevant tests for any shared functionality you modify.
 - Add regression tests for bug fixes when practical.
+- If you modified `README.md`, update `README.hi.md` to keep documentation in sync.
 - Report any checks you could not run, including the reason, in your pull request description.
 
 Do not claim that a check passed unless you actually ran it successfully.
@@ -265,6 +284,42 @@ We welcome first-time contributors and experienced developers alike.
 5. Once confirmed, create a feature branch from the latest main and reference the issue in your pull request.
 
 If you can no longer work on a claimed issue, let the maintainers know so someone else can take it.
+
+#### Issue Assignment & Inactivity Policy
+
+To keep contribution opportunities accessible to everyone and prevent issues from being blocked indefinitely, we operate an automated inactivity policy:
+
+- **5-Day Friendly Nudge**: If an assigned issue has no linked draft/open PR or discussion activity for **5 days**, an automated friendly reminder will be posted to check in on your progress.
+- **7-Day Automatic Unassignment**: If there continues to be no update after **7 days** (or 2 days after the nudge), the issue will be automatically unassigned so other contributors can pick it up.
+- **Requesting More Time (`on-hold`)**: If you need more time due to exams, travel, waiting on dependencies, or complex research, comment on the issue and request the `on-hold` label. Issues labeled `on-hold` or `blocked` are strictly exempt from automated unassignment.
+- **How to Get Reassigned**: If you were unassigned but now have time to resume work, simply comment on the issue asking to be reassigned! If the issue is still open and unassigned, maintainers will gladly assign it back to you.
+
+---
+
+### Proposing Larger Changes (RFC Process)
+
+Before investing time writing code for major changes, please discuss the design with maintainers using our Request for Comments (RFC) proposal process.
+
+#### When a Proposal is Needed
+
+- **Proposal required**: Architectural changes, new subsystems, adding new third-party dependencies, database schema migrations, breaking changes to REST APIs, or major UI/UX redesigns.
+- **No proposal needed**: Routine bug fixes, documentation updates, minor UI tweaks, or adding unit tests for existing behavior.
+
+#### How to Submit
+
+Open a GitHub issue using the [**RFC / Proposal Template**](.github/ISSUE_TEMPLATE/proposal.yml). Detail the problem, proposed solution, alternatives, impact on API/UI, and who will implement it.
+
+#### Review Timeline & Response
+
+Maintainers will review the proposal and provide initial feedback within **3 to 5 business days**.
+
+#### Approval & Implementation
+
+1. **Consensus**: Maintainers and community members discuss technical trade-offs in the issue comments.
+2. **Approval**: Once consensus is reached, a maintainer applies the `approved` label and assigns the issue. If architectural decisions are made, an ADR is recorded in [`docs/adr/`](docs/adr/).
+3. **Implementation**: Only after approval, create your feature branch (`feat/<feature-name>`) and begin implementation.
+
+For a summary table and guidelines, see the [RFC & Proposal Process Guide](docs/proposals.md).
 
 ---
 
@@ -388,11 +443,23 @@ For full details, refer to the [Linting and Formatting Guide](docs/linting-and-f
 
 ---
 
+## Documentation & Translations
+
+OpenSourceMate maintains multilingual documentation:
+
+- The project documentation is maintained in English ([`README.md`](README.md)) and Hindi ([`README.hi.md`](README.hi.md)).
+- **Keep both files in sync**: Whenever you update, add, or modify sections in `README.md`, you must also make the corresponding update in `README.hi.md`.
+- Keep commands, code snippets, file paths, URLs, and environment variable names in English across both files.
+
+---
+
 ## Community & Getting Help
 
 If you have questions, run into issues, or want to discuss ideas:
 
-- Open an [Issue](https://github.com/Muskankr/OpenSourceMate/issues) on GitHub.
-- Clearly describe your question or suggestion.
+- Read our [Support Guide](SUPPORT.md) on where to ask questions (Discussions vs Issues), what details to provide, and where not to post secrets.
+- Start or join a conversation in [GitHub Discussions](https://github.com/Muskankr/OpenSourceMate/discussions).
+- Check [GOVERNANCE.md](GOVERNANCE.md) to learn about contributor roles, the decision-making process, conflict resolution, and moving from contributor to reviewer/maintainer.
+- For security vulnerabilities, review [SECURITY.md](SECURITY.md).
 
 Thank you for contributing to OpenSourceMate!

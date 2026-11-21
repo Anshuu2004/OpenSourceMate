@@ -85,9 +85,14 @@ flowchart TD
 
 ```text
 OpenSourceMate/
+├── .devcontainer/                 # GitHub Codespaces container definition and setup script (#264)
+│   ├── devcontainer.json          # Node 22, Python 3.12, extensions, and forwarded ports
+│   └── post-create.sh             # Automated dependency installation and environment setup
 ├── .github/                       # GitHub actions workflows, issue and PR templates
-│   ├── ISSUE_TEMPLATE/            # Templates for bug reports and feature requests
-│   ├── workflows/ci.yml           # Automated CI running backend tests and frontend linter/build
+│   ├── ISSUE_TEMPLATE/            # Templates for bug reports, feature requests, and RFC proposals (#295)
+│   ├── workflows/                 # CI, inactive assignees manager (#265), and contributor workflows
+│   │   ├── ci.yml                 # Automated CI running tests with coverage thresholds and reporting (#269)
+│   │   └── inactive-assignees.yml # Scheduled workflow to nudge (5d) and unassign (7d) inactive assignees (#265)
 │   └── PULL_REQUEST_TEMPLATE.md   # Standard pull request description guidelines
 │
 ├── backend/                       # FastAPI backend microservice
@@ -142,7 +147,9 @@ OpenSourceMate/
 │   │   ├── SavedIssuesModal.tsx   # Saved/bookmarked issues drawer
 │   │   ├── SkillChart.tsx         # Responsive skill distribution visualization
 │   │   ├── SkillProficiencyBadge.tsx # Beginner, Intermediate, Advanced indicator
-│   │   └── StarterCommentModal.tsx# One-click starter issue claim comment generator
+│   │   ├── StarterCommentModal.tsx# One-click starter issue claim comment generator
+│   │   ├── TechIcon.tsx           # Inline SVG technology icons with fallback (#299)
+│   │   └── icons/LICENSE.md       # Permissive license notices for SVG icons (CC0 1.0, MIT)
 │   ├── hooks/                     # Custom React hooks (e.g., useBookmarkedIssues)
 │   ├── types/                     # TypeScript interface definitions (api.ts)
 │   └── utils/                     # Frontend client utilities
@@ -152,10 +159,20 @@ OpenSourceMate/
 │       ├── recentSearches.ts      # LocalStorage manager for search history
 │       └── validation.ts          # Username format validation regex
 │
+├── data/                          # Dataset files, curation schemas, and benchmark data
+│   ├── curated-projects.json      # Curated welcoming open-source projects with program tags (#298)
+│   ├── curated-projects.schema.json # JSON Schema for curated projects
+│   └── issue-difficulty-labels.csv# Hand-labelled difficulty evaluation dataset
+│
 ├── docs/                          # Architectural specs, audits, and contributor guides
 ├── CONTRIBUTING.md                # Contributor setup, PR process, and code standards
+├── GOVERNANCE.md                  # Project governance, roles, decisions, and progression (#296)
 ├── LICENSE                        # MIT License
-└── README.md                      # Project documentation and quick start guide
+├── PROGRAM_GUIDE.md               # NWOC'26 participant guide (levels, scoring, FAQs) (#297)
+├── README.md                      # Project documentation and quick start guide
+├── README.hi.md                   # Hindi translation of project documentation (#294)
+├── SECURITY.md                    # Vulnerability reporting policy and security disclosures
+└── SUPPORT.md                     # Support channels, discussions, bug reporting, and secrets guide (#296)
 ```
 
 ---
@@ -460,6 +477,7 @@ Defined in `backend/app/config.py` using Pydantic `BaseSettings`:
 * **SkillProficiencyBadge (`components/SkillProficiencyBadge.tsx`)**: Visually indicates competency tier (`Beginner`, `Intermediate`, `Advanced`).
 * **RecentSearches (`components/RecentSearches.tsx`)**: Displays clickable pills for previous searches stored in browser `localStorage`.
 * **StarterCommentModal (`components/StarterCommentModal.tsx`)**: Generates polite, customizable markdown comments for claiming GitHub issues, with a one-click copy button.
+* **TechIcon (`components/TechIcon.tsx`)**: Renders inline SVG icons for 25+ common languages and frameworks with a neutral fallback icon. Fully compliant with CSP (zero external network requests) and accessibility standards (`aria-hidden="true"`), with seamless light and dark mode contrast (#299).
 * **SavedIssuesModal (`components/SavedIssuesModal.tsx`)**: Slide-out drawer displaying issues bookmarked by the user.
 * **ExportMenu (`components/ExportMenu.tsx`)**: One-click download of profile and skill analysis in JSON or Markdown format.
 
