@@ -11,8 +11,11 @@ import ServiceUnavailableBanner from "../components/ServiceUnavailableBanner";
 import SkillChart from "../components/SkillChart";
 import SkillProficiencyBadge from "../components/SkillProficiencyBadge";
 import SkillsToLearn from "../components/SkillsToLearn";
+import TechIcon from "../components/TechIcon";
 import IssueCard from "../components/IssueCard";
+import { hiddenIssueId, useHiddenIssues } from "../hooks/useHiddenIssues";
 import { getMockRecommendedIssues } from "../data/mockIssues";
+import { rankIssuesForLearningMode, COMMON_TARGET_SKILLS } from "../utils/learningMode";
 import {
   type GitHubUserProfile as Profile,
   type SkillItem as Skill,
@@ -34,21 +37,14 @@ import {
   sanitizeErrorMessage,
   type ServiceErrorDetails,
 } from "../utils/errorHandling";
-import {
-  exportAnalysisData,
-  type ExportFormat,
-  type ExportPayload,
-} from "../utils/exportAnalysis";
+import { exportAnalysisData, type ExportFormat, type ExportPayload } from "../utils/exportAnalysis";
 import {
   getRecentSearches,
   saveRecentSearch,
   removeRecentSearch,
   clearRecentSearches,
 } from "../utils/recentSearches";
-import {
-  validateGitHubUsername,
-  resolveAnalyzerErrorMessage,
-} from "../utils/validation";
+import { validateGitHubUsername, resolveAnalyzerErrorMessage } from "../utils/validation";
 import BuildVersionBadge from "../components/BuildVersionBadge";
 import ContributorsWall from "../components/ContributorsWall";
 export default function Home() {
@@ -116,6 +112,7 @@ export default function Home() {
       .filter((el): el is HTMLElement => el !== null);
 
     if (elements.length === 0) return;
+    if (typeof IntersectionObserver === "undefined") return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -149,11 +146,20 @@ export default function Home() {
   const [matchingError, setMatchingError] = useState("");
   const [isDemoData, setIsDemoData] = useState(false);
 
+  // Learning Mode state
+  const [isLearningMode, setIsLearningMode] = useState(false);
+  const [targetSkills, setTargetSkills] = useState<string[]>([]);
+
   // Filters for recommended issues (Issue #47)
   const [languageFilter, setLanguageFilter] = useState("all");
   const [labelFilter, setLabelFilter] = useState("all");
   const [minScoreFilter, setMinScoreFilter] = useState<number>(0);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showHidden, setShowHidden] = useState(false);
+  const { hiddenIds, isHidden, hideIssue, restoreIssue } = useHiddenIssues();
+  const hiddenCount = recommendations.filter((issue) =>
+    hiddenIds.includes(hiddenIssueId(issue))
+  ).length;
 
   const [error, setError] = useState("");
   const [serviceError, setServiceError] = useState<ServiceErrorDetails | null>(null);
@@ -243,9 +249,24 @@ export default function Home() {
     return Array.from(langs).sort();
   }, [recommendations]);
 
+  // Dynamic set of selectable target skills for learning mode
+  const selectableSkills = useMemo(() => {
+    const set = new Set<string>(COMMON_TARGET_SKILLS);
+    recommendations.forEach((i) => {
+      if (i.language) set.add(i.language);
+    });
+    return Array.from(set).sort();
+  }, [recommendations]);
+
+  // Re-rank recommendations when learning mode is active
+  const rankedRecommendations = useMemo(() => {
+    return rankIssuesForLearningMode(recommendations, targetSkills, isLearningMode);
+  }, [recommendations, targetSkills, isLearningMode]);
+
   // Client-side filtering logic (Issue #47)
   const filteredRecommendations = useMemo(() => {
-    return recommendations.filter((rec) => {
+    return rankedRecommendations.filter((rec) => {
+      if (!showHidden && hiddenIds.includes(hiddenIssueId(rec))) return false;
       if (
         languageFilter !== "all" &&
         rec.language?.toLowerCase() !== languageFilter.toLowerCase()
@@ -254,14 +275,10 @@ export default function Home() {
       }
 
       if (labelFilter === "good-first-issue") {
-        const hasGFI = rec.labels?.some((l) =>
-          l.toLowerCase().includes("good first issue")
-        );
+        const hasGFI = rec.labels?.some((l) => l.toLowerCase().includes("good first issue"));
         if (!hasGFI) return false;
       } else if (labelFilter === "help-wanted") {
-        const hasHW = rec.labels?.some((l) =>
-          l.toLowerCase().includes("help wanted")
-        );
+        const hasHW = rec.labels?.some((l) => l.toLowerCase().includes("help wanted"));
         if (!hasHW) return false;
       }
 
@@ -280,7 +297,9 @@ export default function Home() {
       return true;
     });
   }, [
-    recommendations,
+    rankedRecommendations,
+    hiddenIds,
+    showHidden,
     languageFilter,
     labelFilter,
     minScoreFilter,
@@ -430,9 +449,7 @@ export default function Home() {
 
       <div
         className={`min-h-screen transition-colors duration-300 ${
-          theme === "dark"
-            ? "bg-[#05070d] text-white"
-            : "bg-gray-50 text-gray-900"
+          theme === "dark" ? "bg-[#05070d] text-white" : "bg-gray-50 text-gray-900"
         }`}
       >
         {/* Background decorative gradient */}
@@ -445,9 +462,7 @@ export default function Home() {
         <header
           role="banner"
           className={`sticky top-0 z-40 border-b backdrop-blur-xl transition-colors duration-300 ${
-            theme === "dark"
-              ? "border-white/5 bg-[#05070d]/80"
-              : "border-gray-200 bg-white/90"
+            theme === "dark" ? "border-white/5 bg-[#05070d]/80" : "border-gray-200 bg-white/90"
           }`}
         >
           <nav
@@ -462,9 +477,7 @@ export default function Home() {
                 ✦
               </div>
 
-              <span className="text-lg font-semibold tracking-tight">
-                OpenSourceMate
-              </span>
+              <span className="text-lg font-semibold tracking-tight">OpenSourceMate</span>
             </div>
 
             {/* Desktop Navigation */}
@@ -508,9 +521,7 @@ export default function Home() {
 
               <button
                 type="button"
-                onClick={() =>
-                  setTheme((current) => (current === "dark" ? "light" : "dark"))
-                }
+                onClick={() => setTheme((current) => (current === "dark" ? "light" : "dark"))}
                 aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
                 aria-pressed={theme === "light"}
                 className={`rounded-xl border px-3.5 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 ${
@@ -527,9 +538,7 @@ export default function Home() {
             <div className="flex items-center gap-2 md:hidden">
               <button
                 type="button"
-                onClick={() =>
-                  setTheme((current) => (current === "dark" ? "light" : "dark"))
-                }
+                onClick={() => setTheme((current) => (current === "dark" ? "light" : "dark"))}
                 aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
                 className="rounded-xl border border-white/10 bg-white/5 p-2 text-sm"
               >
@@ -553,11 +562,7 @@ export default function Home() {
                     stroke="currentColor"
                     aria-hidden="true"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 ) : (
                   <svg
@@ -669,9 +674,8 @@ export default function Home() {
                   theme === "dark" ? "text-gray-300" : "text-gray-700"
                 }`}
               >
-                OpenSourceMate analyzes your GitHub profile and technical
-                experience to help you discover meaningful open-source
-                contribution opportunities.
+                OpenSourceMate analyzes your GitHub profile and technical experience to help you
+                discover meaningful open-source contribution opportunities.
               </p>
             </div>
           </section>
@@ -790,7 +794,8 @@ export default function Home() {
                 />
 
                 <span id="username-hint" className="sr-only">
-                  Provide a public GitHub username to analyze technical skills, language proficiencies, and repository breakdowns.
+                  Provide a public GitHub username to analyze technical skills, language
+                  proficiencies, and repository breakdowns.
                 </span>
               </div>
 
@@ -929,9 +934,7 @@ export default function Home() {
                           TECHNICAL PROFILE
                         </p>
 
-                        <h3 className="mt-2 text-2xl font-bold">
-                          Your technical skills
-                        </h3>
+                        <h3 className="mt-2 text-2xl font-bold">Your technical skills</h3>
 
                         <p
                           className={`mt-2 text-sm ${
@@ -957,13 +960,9 @@ export default function Home() {
                           theme === "dark" ? "border-white/10" : "border-gray-300"
                         }`}
                       >
-                        <p
-                          className={
-                            theme === "dark" ? "text-gray-300" : "text-gray-600"
-                          }
-                        >
-                          No public repositories with a language were found for this
-                          profile, so there are no skills to show yet.
+                        <p className={theme === "dark" ? "text-gray-300" : "text-gray-600"}>
+                          No public repositories with a language were found for this profile, so
+                          there are no skills to show yet.
                         </p>
                       </div>
                     ) : (
@@ -977,19 +976,11 @@ export default function Home() {
 
                         <div className="mt-8 grid gap-4 sm:grid-cols-2 sm:gap-5">
                           {skills.skills.map((skill) => (
-                            <SkillCard
-                              key={skill.name}
-                              skill={skill}
-                              theme={theme}
-                            />
+                            <SkillCard key={skill.name} skill={skill} theme={theme} />
                           ))}
                         </div>
 
-                        <SkillsToLearn
-                          skills={skills.skills}
-                          theme={theme}
-                          className="mt-8"
-                        />
+                        <SkillsToLearn skills={skills.skills} theme={theme} className="mt-8" />
                       </>
                     )}
                   </div>
@@ -1019,17 +1010,30 @@ export default function Home() {
                           theme === "dark" ? "text-gray-300" : "text-gray-600"
                         }`}
                       >
-                        Opportunities matching your skills and experience, ranked by compatibility score.
+                        Opportunities matching your skills and experience, ranked by compatibility
+                        score.
                       </p>
                     </div>
 
                     {recommendations.length > 0 && (
-                      <div
-                        className={`text-xs sm:text-sm ${
-                          theme === "dark" ? "text-gray-400" : "text-gray-600"
-                        }`}
-                      >
-                        Showing {filteredRecommendations.length} of {recommendations.length} issues
+                      <div className="flex flex-col items-end gap-2">
+                        <span
+                          className={`text-xs sm:text-sm ${
+                            theme === "dark" ? "text-gray-400" : "text-gray-600"
+                          }`}
+                        >
+                          Showing {filteredRecommendations.length} of {recommendations.length}{" "}
+                          issues
+                        </span>
+                        {hiddenCount > 0 && (
+                          <button
+                            type="button"
+                            onClick={() => setShowHidden((value) => !value)}
+                            className="rounded text-xs font-medium text-purple-400 underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400"
+                          >
+                            {showHidden ? "Hide hidden" : `Show hidden (${hiddenCount})`}
+                          </button>
+                        )}
                       </div>
                     )}
                   </div>
@@ -1055,6 +1059,128 @@ export default function Home() {
                           Displaying realistic open-source issues matched to your technical profile.
                         </p>
                       </div>
+                    </div>
+                  )}
+
+                  {/* Learning Mode Toggle & Target Skills Picker */}
+                  {recommendations.length > 0 && (
+                    <div
+                      data-testid="learning-mode-container"
+                      className={`mt-4 rounded-2xl border p-4 transition-all duration-200 ${
+                        isLearningMode
+                          ? theme === "dark"
+                            ? "border-emerald-500/30 bg-emerald-500/5 shadow-sm"
+                            : "border-emerald-200 bg-emerald-50/70 shadow-sm"
+                          : theme === "dark"
+                            ? "border-white/5 bg-white/[0.02]"
+                            : "border-gray-200 bg-gray-50/50"
+                      }`}
+                    >
+                      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-center gap-3">
+                          <label
+                            htmlFor="home-learning-mode-toggle"
+                            className="relative inline-flex cursor-pointer items-center"
+                          >
+                            <input
+                              id="home-learning-mode-toggle"
+                              type="checkbox"
+                              data-testid="learning-mode-toggle"
+                              checked={isLearningMode}
+                              onChange={(e) => setIsLearningMode(e.target.checked)}
+                              className="peer sr-only"
+                              aria-label="Toggle learning mode"
+                            />
+                            <div className="peer h-6 w-11 rounded-full bg-gray-700 peer-checked:bg-emerald-500 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-emerald-400 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full peer-checked:after:border-white"></div>
+                          </label>
+
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+                                🌱 Learning Mode
+                              </span>
+                              {isLearningMode && (
+                                <span
+                                  data-testid="learning-mode-active-indicator"
+                                  className="rounded-full bg-emerald-500/20 px-2 py-0.2 text-[10px] font-semibold text-emerald-300"
+                                >
+                                  Active
+                                </span>
+                              )}
+                            </div>
+                            <p
+                              className={`text-xs ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}
+                            >
+                              Prioritize beginner-friendly issues in target skills you want to
+                              learn.
+                            </p>
+                          </div>
+                        </div>
+
+                        {isLearningMode && targetSkills.length > 0 && (
+                          <button
+                            type="button"
+                            onClick={() => setTargetSkills([])}
+                            className="self-start text-xs text-gray-400 hover:text-white underline sm:self-auto"
+                          >
+                            Clear target skills
+                          </button>
+                        )}
+                      </div>
+
+                      {/* Target Skills Picker */}
+                      {isLearningMode && (
+                        <div
+                          data-testid="target-skills-picker"
+                          className="mt-3.5 border-t border-white/5 pt-3"
+                        >
+                          <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                            <span className="text-xs font-semibold text-gray-300">
+                              Select target technologies to learn:
+                            </span>
+                            {targetSkills.length > 0 && (
+                              <span className="text-xs font-medium text-emerald-400">
+                                {targetSkills.length} selected: {targetSkills.join(", ")}
+                              </span>
+                            )}
+                          </div>
+
+                          <div
+                            className="mt-2.5 flex flex-wrap gap-1.5"
+                            role="group"
+                            aria-label="Target skills picker"
+                          >
+                            {selectableSkills.map((skill) => {
+                              const isSelected = targetSkills.includes(skill);
+                              return (
+                                <button
+                                  key={skill}
+                                  type="button"
+                                  data-testid={`target-skill-chip-${skill}`}
+                                  aria-pressed={isSelected}
+                                  onClick={() => {
+                                    setTargetSkills((prev) =>
+                                      isSelected
+                                        ? prev.filter((s) => s !== skill)
+                                        : [...prev, skill]
+                                    );
+                                  }}
+                                  className={`rounded-lg px-2.5 py-1 text-xs font-medium transition ${
+                                    isSelected
+                                      ? "border border-emerald-400 bg-emerald-500/20 text-emerald-300 ring-1 ring-emerald-400/50"
+                                      : theme === "dark"
+                                        ? "border border-white/10 bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white"
+                                        : "border border-gray-300 bg-white text-gray-700 hover:bg-gray-100"
+                                  }`}
+                                >
+                                  {isSelected ? "✓ " : "+ "}
+                                  {skill}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
 
@@ -1164,9 +1290,7 @@ export default function Home() {
 
                       {hasActiveFilters && (
                         <div className="mt-3 flex items-center justify-between border-t border-white/5 pt-3 text-xs">
-                          <span className="text-gray-400">
-                            Active filters applied
-                          </span>
+                          <span className="text-gray-400">Active filters applied</span>
                           <button
                             type="button"
                             onClick={resetFilters}
@@ -1183,10 +1307,7 @@ export default function Home() {
                   {loadingMatching && (
                     <div className="mt-6 space-y-4">
                       {[0, 1].map((i) => (
-                        <div
-                          key={i}
-                          className="rounded-2xl border border-white/5 bg-black/20 p-5"
-                        >
+                        <div key={i} className="rounded-2xl border border-white/5 bg-black/20 p-5">
                           <div className="flex items-center justify-between">
                             <Bar className="h-4 w-40" />
                             <Bar className="h-6 w-14" />
@@ -1251,11 +1372,7 @@ export default function Home() {
                         theme === "dark" ? "border-white/10" : "border-gray-300"
                       }`}
                     >
-                      <p
-                        className={
-                          theme === "dark" ? "text-gray-300" : "text-gray-600"
-                        }
-                      >
+                      <p className={theme === "dark" ? "text-gray-300" : "text-gray-600"}>
                         No matching open issues found for the detected skills at this time.
                       </p>
                     </div>
@@ -1270,6 +1387,10 @@ export default function Home() {
                           issue={issue}
                           theme={theme}
                           isMock={isDemoData}
+                          username={profile?.username || username}
+                          isHidden={isHidden(issue)}
+                          onHide={() => hideIssue(issue)}
+                          onRestore={() => restoreIssue(issue)}
                         />
                       ))}
                     </div>
@@ -1307,8 +1428,8 @@ export default function Home() {
                     theme === "dark" ? "text-gray-300" : "text-gray-600"
                   }`}
                 >
-                  A simple workflow designed to remove the guesswork from
-                  getting started with open source.
+                  A simple workflow designed to remove the guesswork from getting started with open
+                  source.
                 </p>
               </div>
 
@@ -1369,16 +1490,14 @@ export default function Home() {
                   theme === "dark" ? "text-gray-300" : "text-gray-600"
                 }`}
               >
-                Stop scrolling through thousands of issues.
-                Start contributing to projects where your skills can make an impact.
+                Stop scrolling through thousands of issues. Start contributing to projects where
+                your skills can make an impact.
               </p>
 
               <button
                 type="button"
                 onClick={() => {
-                  document
-                    .getElementById("analyzer")
-                    ?.scrollIntoView({ behavior: "smooth" });
+                  document.getElementById("analyzer")?.scrollIntoView({ behavior: "smooth" });
                   document.getElementById("github-username-input")?.focus();
                 }}
                 className="mt-8 rounded-xl bg-white px-6 py-3.5 text-sm font-semibold text-black transition hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2"
@@ -1414,9 +1533,7 @@ export default function Home() {
               <span>•</span>
               <p>Built for the open-source community.</p>
             </div>
-            <GitHubLink className="transition hover:text-purple-400">
-              View Repository ↗
-            </GitHubLink>
+            <GitHubLink className="transition hover:text-purple-400">View Repository ↗</GitHubLink>
           </div>
         </footer>
       </div>
@@ -1428,24 +1545,17 @@ export default function Home() {
 /* Reusable Components                */
 /* ---------------------------------- */
 
-function SkillCard({
-  skill,
-  theme,
-}: {
-  skill: Skill;
-  theme?: "dark" | "light";
-}) {
+function SkillCard({ skill, theme }: { skill: Skill; theme?: "dark" | "light" }) {
   return (
     <div
       className={`rounded-2xl border p-4 sm:p-5 ${
-        theme === "dark"
-          ? "border-white/5 bg-black/20"
-          : "border-gray-200 bg-gray-50"
+        theme === "dark" ? "border-white/5 bg-black/20" : "border-gray-200 bg-gray-50"
       }`}
     >
       <div className="flex items-center justify-between">
         <div>
           <div className="flex flex-wrap items-center gap-2">
+            <TechIcon name={skill.name} theme={theme} className="h-5 w-5 shrink-0" />
             <h4 className="font-semibold">{skill.name}</h4>
             <SkillProficiencyBadge
               level={skill.proficiency}
@@ -1457,21 +1567,14 @@ function SkillCard({
             />
           </div>
 
-          <p
-            className={`mt-1 text-xs ${
-              theme === "dark" ? "text-gray-400" : "text-gray-600"
-            }`}
-          >
-            {skill.repository_count}{" "}
-            {skill.repository_count === 1 ? "repository" : "repositories"}
+          <p className={`mt-1 text-xs ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
+            {skill.repository_count} {skill.repository_count === 1 ? "repository" : "repositories"}
           </p>
         </div>
 
         <span
           className={`rounded-lg px-2.5 py-1 text-xs font-medium ${
-            theme === "dark"
-              ? "bg-white/5 text-gray-300"
-              : "bg-gray-200 text-gray-800"
+            theme === "dark" ? "bg-white/5 text-gray-300" : "bg-gray-200 text-gray-800"
           }`}
         >
           {skill.percentage}%
@@ -1548,9 +1651,7 @@ function StepCard({
       <h3 className="mt-7 text-lg font-semibold">{title}</h3>
 
       <p
-        className={`mt-3 text-sm leading-6 ${
-          theme === "dark" ? "text-gray-300" : "text-gray-600"
-        }`}
+        className={`mt-3 text-sm leading-6 ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}
       >
         {description}
       </p>

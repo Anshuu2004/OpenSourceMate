@@ -14,6 +14,18 @@ This guide explains the labels used on issues in this project and how to choose 
 
 | 'good first issue' | Specially chosen for newcomers. |
 
+## NWOC'26 Program Levels
+
+For participants in **NJACK Winter of Code 2026 (NWOC'26)**, issues are assigned level labels corresponding to leaderboard points:
+
+| Label    | Level        | Points    | Scope                                                                    |
+| :------- | :----------- | :-------- | :----------------------------------------------------------------------- |
+| `level1` | Level 1 (L1) | 10 pts    | Beginner tasks, minor bug fixes, documentation, simple UI tweaks         |
+| `level2` | Level 2 (L2) | 25–30 pts | Intermediate features, components, tests, API routes, validation         |
+| `level3` | Level 3 (L3) | 45–50 pts | Advanced architecture, core algorithms, ML baselines, fullstack features |
+
+For complete program rules, claiming workflows, and FAQs, see the [NWOC'26 Program Guide](../PROGRAM_GUIDE.md).
+
 ## Area
 
 | Label | Meaning |
@@ -32,11 +44,12 @@ This guide explains the labels used on issues in this project and how to choose 
 
 ## Status
 
-| Label | Meaning |
-
-| 'needs-triage' | New issue that maintainers have not reviewed yet |
-
-| 'in-progress' | Someone is already working on it. Please pick another issue. |
+| Label              | Meaning                                                                        |
+| ------------------ | ------------------------------------------------------------------------------ |
+| 'needs-triage'     | New issue that maintainers have not reviewed yet                               |
+| 'in-progress'      | Someone is already working on it. Please pick another issue.                   |
+| 'on-hold'          | Temporarily paused by contributor request; exempt from automated unassignment  |
+| 'stale-assignment' | Inactive for 5 days; awaiting contributor update before automated unassignment |
 
 ## How to pick an issue
 

@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-  "node": ">=22 <23"
-},
+    "node": ">=22 <23"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -15,12 +15,13 @@
     "codegen:types": "node scripts/generate-types.mjs",
     "codegen:check": "node scripts/generate-types.mjs --check",
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "mock-server": "node scripts/mock-server.mjs"
   },
   "dependencies": {
-    "next": "16.4.5",
+    "next": "16.4.6",
     "react": "19.3.1",
     "react-dom": "19.3.1"
   },
@@ -35,11 +36,11 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^10",
-    "eslint-config-next": "16.4.5",
+    "eslint-config-next": "16.4.6",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^30.5.2",
     "prettier": "^3.5.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^7"
   }
 }
